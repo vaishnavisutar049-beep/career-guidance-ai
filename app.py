@@ -74,12 +74,47 @@ def init_db():
                  username TEXT UNIQUE NOT NULL, 
                  password TEXT NOT NULL)''')
     
+    # Create mentors table
+    c.execute('''CREATE TABLE IF NOT EXISTS mentors
+                (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 name TEXT NOT NULL,
+                 expertise TEXT,
+                 available TEXT DEFAULT 'yes',
+                 contact TEXT)''')
+    
+    # Create certificates table
+    c.execute('''CREATE TABLE IF NOT EXISTS certificates
+                (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 user_id INTEGER,
+                 course_name TEXT,
+                 issue_date DATE,
+                 certificate_id TEXT)''')
+    
+    # Create progress table
+    c.execute('''CREATE TABLE IF NOT EXISTS progress
+                (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 user_id INTEGER,
+                 course_name TEXT,
+                 completion_percentage INTEGER,
+                 date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+    
     # Check if admin exists, if not create default admin
     c.execute("SELECT COUNT(*) FROM admins")
     if c.fetchone()[0] == 0:
         # Create default admin (username: admin, password: admin123)
         default_password = hashlib.sha256('admin123'.encode()).hexdigest()
         c.execute("INSERT INTO admins (username, password) VALUES (?, ?)", ('admin', default_password))
+    
+    # Add sample mentors if not exist
+    c.execute("SELECT COUNT(*) FROM mentors")
+    if c.fetchone()[0] == 0:
+        mentors_data = [
+            ('Dr. Priya Sharma', 'Career Counseling', 'yes', 'priya@carrerai.com'),
+            ('Prof. Rajesh Kumar', 'Engineering Admissions', 'yes', 'rajesh@carrerai.com'),
+            ('Ms. Anita Desai', 'Medical Career Guide', 'yes', 'anita@carrerai.com'),
+            ('Mr. Suresh Jadhav', 'MPSC/UPSC Expert', 'yes', 'suresh@carrerai.com'),
+        ]
+        c.executemany('INSERT INTO mentors (name, expertise, available, contact) VALUES (?, ?, ?, ?)', mentors_data)
     
     conn.commit()
     conn.close()
@@ -1289,9 +1324,7 @@ def aptitude_test():
 @app.route('/mentors')
 def mentors():
     """Mentor listing page"""
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-    
+    # Removed login requirement - mentors should be publicly accessible
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
     c.execute("SELECT * FROM mentors WHERE available = 'yes'")
@@ -1303,13 +1336,17 @@ def mentors():
 @app.route('/certificates')
 def certificates():
     """User certificates"""
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-    
+    # Removed login requirement - certificates page shows info to all users
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
-    c.execute("SELECT * FROM certificates WHERE user_id = ? ORDER BY issue_date DESC", (session['user_id'],))
-    certificates = c.fetchall()
+    
+    # Check if user is logged in
+    if 'user_id' in session:
+        c.execute("SELECT * FROM certificates WHERE user_id = ? ORDER BY issue_date DESC", (session['user_id'],))
+        certificates = c.fetchall()
+    else:
+        certificates = []
+    
     conn.close()
     
     return render_template('certificates.html', certificates=certificates)
@@ -1691,6 +1728,59 @@ def courses():
 def parents_corner():
     """Parents Corner - Information for parents about career guidance"""
     return render_template('parents_corner.html')
+
+# ==================== ADMIN PAGE ROUTE ====================
+
+@app.route('/admin')
+def admin():
+    """Simple Admin Page - Overview stats"""
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    
+    # Get counts
+    c.execute('SELECT COUNT(*) FROM users')
+    user_count = c.fetchone()[0]
+    
+    c.execute('SELECT COUNT(*) FROM results')
+    result_count = c.fetchone()[0]
+    
+    c.execute('SELECT COUNT(*) FROM certificates')
+    cert_count = c.fetchone()[0]
+    
+    c.execute('SELECT COUNT(*) FROM courses')
+    course_count = c.fetchone()[0]
+    
+    # Get recent users
+    c.execute('SELECT id, name, email FROM users ORDER BY id DESC LIMIT 5')
+    recent_users = c.fetchall()
+    
+    conn.close()
+    
+    return render_template('admin.html', 
+                          user_count=user_count,
+                          result_count=result_count,
+                          cert_count=cert_count,
+                          course_count=course_count,
+                          recent_users=recent_users)
+
+# ==================== CERTIFICATE VIEW ROUTE ====================
+
+@app.route('/certificate/<int:cert_id>')
+def certificate_view(cert_id):
+    """View individual certificate"""
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    
+    c.execute('SELECT * FROM certificates WHERE id = ?', (cert_id,))
+    certificate = c.fetchone()
+    
+    conn.close()
+    
+    if certificate:
+        return render_template('certificate_view.html', certificate=certificate)
+    else:
+        flash('Certificate not found')
+        return redirect(url_for('certificates'))
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
