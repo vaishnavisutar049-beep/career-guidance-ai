@@ -1,0 +1,44 @@
+{
+  "name": "Career Guidance AI",
+  "short_name": "CareerAI",
+  "description": "AI-powered career guidance for students - MPSC, UPSC, Banking, Engineering, Medical",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "any",
+  "categories": ["education", "career"],
+  "lang": "en-IN",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Chat with AI",
+      "short_name": "Chat",
+      "description": "Talk to AI Career Assistant",
+      "url": "/chat",
+      "icons": [{ "src": "/static/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Career Suggestions",
+      "short_name": "Careers",
+      "description": "Get career suggestions",
+      "url": "/career-suggestions",
+      "icons": [{ "src": "/static/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

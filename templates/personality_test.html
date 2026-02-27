@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality Test - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .content { padding: 30px; }
+        .question { margin-bottom: 25px; }
+        .question h3 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        .options label {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .options label:hover { background: #e9ecef; }
+        .options input { margin-right: 10px; }
+        .btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Personality Test</h1>
+            <p>Discover your personality type</p>
+        </div>
+        <div class="content">
+            <form method="POST">
+                {% for q in questions %}
+                <div class="question">
+                    <h3>{{ loop.index }}. {{ q.question }}</h3>
+                    <div class="options">
+                        {% for opt in q.options %}
+                        <label>
+                            <input type="radio" name="q{{ loop.index }}" value="{{ opt.value }}" required>
+                            {{ opt.text }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn">Get Results</button>
+            </form>
+            <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

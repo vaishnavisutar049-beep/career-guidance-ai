@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Career Assistant - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            height: 85vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .header h1 .voice-wave {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 20px;
+        }
+        .header h1 .voice-wave span {
+            width: 3px;
+            background: #4ade80;
+            border-radius: 2px;
+            animation: headerWave 1s ease-in-out infinite;
+        }
+        .header h1 .voice-wave span:nth-child(1) { height: 40%; animation-delay: 0s; }
+        .header h1 .voice-wave span:nth-child(2) { height: 60%; animation-delay: 0.1s; }
+        .header h1 .voice-wave span:nth-child(3) { height: 100%; animation-delay: 0.2s; }
+        .header h1 .voice-wave span:nth-child(4) { height: 60%; animation-delay: 0.3s; }
+        .header h1 .voice-wave span:nth-child(5) { height: 40%; animation-delay: 0.4s; }
+        @keyframes headerWave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.5); }
+        }
+        .voice-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #4ade80;
+            border-radius: 50%;
+            margin-left: 10px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        .chat-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 80%;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .bot-message {
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .user-message {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        .input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .input-area input {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .input-area input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .voice-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 20px;
+        }
+        .mic-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .mic-btn:hover {
+            transform: scale(1.1);
+        }
+        .mic-btn.listening {
+            background: #ef4444;
+            animation: pulse 0.5s infinite;
+        }
+        .speak-btn {
+            background: #10b981;
+            color: white;
+        }
+        .speak-btn:hover {
+            transform: scale(1.1);
+        }
+        .send-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .send-btn:hover {
+            transform: scale(1.05);
+        }
+        .language-select {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .language-select button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            background: white;
+            color: #666;
+            transition: all 0.3s;
+        }
+        .language-select button.active {
+            background: #667eea;
+            color: white;
+        }
+        .language-select button#btn-auto.active {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .quick-reply {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #667eea;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .quick-reply:hover {
+            background: #667eea;
+            color: white;
+        }
+        .typing {
+            color: #999;
+            font-style: italic;
+        }
+        .voice-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .voice-controls button {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        .enable-voice {
+            background: #3b82f6;
+            color: white;
+        }
+        .enable-voice.active {
+            background: #10b981;
+        }
+        .voice-status {
+            text-align: center;
+            padding: 5px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                border-radius: 15px;
+                height: 90vh;
+                max-width: 100%;
+            }
+            
+            .header {
+                padding: 12px;
+            }
+            
+            .header h1 {
+                font-size: 1rem;
+                gap: 5px;
+            }
+            
+            .header p {
+                font-size: 11px;
+                margin-top: 5px;
+            }
+            
+            .voice-controls {
+                padding: 8px;
+                gap: 8px;
+            }
+            
+            .voice-controls button {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+            
+            .language-select {
+                padding: 8px;
+                gap: 6px;
+            }
+            
+            .language-select button {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+            
+            .quick-replies {
+                padding: 8px;
+                gap: 6px;
+            }
+            
+            .quick-reply {
+                padding: 6px 8px;
+                font-size: 10px;
+            }
+            
+            .chat-area {
+                padding: 12px;
+            }
+            
+            .message {
+                padding: 10px 12px;
+                font-size: 13px;
+                border-radius: 15px;
+                max-width: 85%;
+            }
+            
+            .input-area {
+                padding: 12px;
+                gap: 8px;
+            }
+            
+            .input-area input {
+                padding: 10px;
+                font-size: 13px;
+            }
+            
+            .voice-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .send-btn {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+            
+            .voice-status {
+                font-size: 10px;
+                padding: 4px;
+            }
+        }
+        
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container {
+                height: 90vh;
+            }
+            
+            .header h1 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎤 AI Career Voice Assistant <span id="voiceIndicator" class="voice-indicator" style="display: none;"></span>
+                <div class="voice-wave" id="voiceWave" style="display: none;">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </h1>
+            <p>Talk to me about your career!</p>
+        </div>
+        <div class="voice-controls">
+            <button class="enable-voice" id="enableVoiceBtn" onclick="toggleVoiceInput()">
+                🎤 Enable Voice Input
+            </button>
+            <button onclick="toggleVoiceOutput()" id="speakResponseBtn" style="background: #6b7280; color: white;">
+                🔊 Auto-Speak: OFF
+            </button>
+        </div>
+        <div class="voice-status" id="voiceStatus">
+            Click "Enable Voice Input" to talk to the assistant
+        </div>
+        <div class="language-select">
+            <button onclick="setLanguage('auto')" class="active" id="btn-auto">🔄 Auto-Detect</button>
+            <button onclick="setLanguage('en')" id="btn-en">English</button>
+            <button onclick="setLanguage('mr')" id="btn-mr">मराठी</button>
+            <button onclick="setLanguage('hi')" id="btn-hi">हिंदी</button>
+        </div>
+        <div class="quick-replies" id="quickReplies">
+            <span class="quick-reply" onclick="sendQuickReply('mpsc exam details')">📋 MPSC</span>
+            <span class="quick-reply" onclick="sendQuickReply('upsc preparation')">🏛️ UPSC</span>
+            <span class="quick-reply" onclick="sendQuickReply('engineering career')">🔬 Engineering</span>
+            <span class="quick-reply" onclick="sendQuickReply('medical career after 12th')">⚕️ Medical</span>
+            <span class="quick-reply" onclick="sendQuickReply('job after bcom')">💼 Commerce</span>
+            <span class="quick-reply" onclick="sendQuickReply('salary of software engineer')">💰 Salary</span>
+            <span class="quick-reply" onclick="sendQuickReply('मी इंजीनियरिंग करू शकतो का')">🔧 मराठी: Engineering</span>
+            <span class="quick-reply" onclick="sendQuickReply('12 वी नंतर कोणता कोर्स घ्यावा')">🎓 मराठी: Courses</span>
+            <span class="quick-reply" onclick="sendQuickReply('MPSC साठी कसा अभ्यास करावा')">📝 मराठी: MPSC</span>
+        </div>
+        <div class="chat-area" id="chatArea">
+            <div class="message bot-message">
+                Namaste! 👋 I'm your AI Career Voice Assistant (Alexa-style!). You can:
+                <br>🎤 <b>Speak</b> your questions (click Enable Voice)
+                <br>🔊 <b>Listen</b> to my responses (toggle Auto-Speak)
+                <br>🔄 <b>Auto-Detect</b> language (I'll understand Marathi/Hindi!)
+                <br><br>Ask me about:
+                <br>• Career options after 10th/12th
+                <br>• Engineering, Medical, Commerce, Arts
+                <br>• MPSC, UPSC, JEE, NEET exams
+                <br>• Salary expectations
+                <br>• College recommendations
+                <br><br><b>मराठीत बोला - मी समजेल! 🎤</b>
+                <br><b>हिंदी में बोलिए - मैं समझूंगा! 🎤</b>
+            </div>
+        </div>
+        <div class="input-area">
+            <button class="voice-btn mic-btn" id="micBtn" onclick="toggleListening()" title="Click to speak">
+                🎤
+            </button>
+            <input type="text" id="userInput" placeholder="Type or speak your message..." onkeypress="handleKeyPress(event)">
+            <button class="voice-btn speak-btn" id="speakLastBtn" onclick="speakLastResponse()" title="Speak last response">
+                🔊
+            </button>
+            <button class="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <a href="/dashboard" style="display:block;text-align:center;margin-top:15px;color:white;text-decoration:none;">← Back to Dashboard</a>
+
+    <script>
+        let currentLanguage = 'auto';
+        let voiceInputEnabled = false;
+        let autoSpeakEnabled = false;
+        let recognition = null;
+        let isListening = false;
+        let lastBotResponse = '';
+        let detectedLanguage = 'en'; // Stores the detected language from speech
+        
+        // Speech Synthesis (Text-to-Speech)
+        const synth = window.speechSynthesis;
+        
+        // Language mapping for speech synthesis
+        const speechLanguages = {
+            'auto': 'en-US',
+            'en': 'en-US',
+            'mr': 'mr-IN',
+            'hi': 'hi-IN'
+        };
+        
+        // Initialize Speech Recognition if available
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+            
+            recognition.onstart = function() {
+                isListening = true;
+                document.getElementById('micBtn').classList.add('listening');
+                document.getElementById('voiceStatus').textContent = '🎤 Listening... Speak now!';
+                document.getElementById('voiceIndicator').style.display = 'inline-block';
+                document.getElementById('voiceWave').style.display = 'flex';
+            };
+            
+            recognition.onresult = function(event) {
+                const transcript = Array.from(event.results)
+                    .map(result => result[0])
+                    .map(result => result.transcript)
+                    .join('');
+                
+                document.getElementById('userInput').value = transcript;
+                
+                if (event.results[0].isFinal) {
+                    // Detect language from the spoken text
+                    if (currentLanguage === 'auto') {
+                        detectedLanguage = detectLanguageFromText(transcript);
+                        console.log('Detected language:', detectedLanguage);
+                        
+                        // Update recognition to the detected language for better results
+                        recognition.lang = speechLanguages[detectedLanguage] || 'en-US';
+                        
+                        // Update the button to show detected language
+                        document.querySelectorAll('.language-select button').forEach(btn => btn.classList.remove('active'));
+                        document.getElementById('btn-auto').classList.add('active');
+                        document.getElementById('btn-auto').textContent = '🔄 ' + (detectedLanguage === 'mr' ? 'मराठी' : detectedLanguage === 'hi' ? 'हिंदी' : 'English');
+                    }
+                    sendMessage();
+                }
+            };
+            
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+                stopListening();
+            };
+            
+            recognition.onend = function() {
+                stopListening();
+            };
+        } else {
+            document.getElementById('voiceStatus').textContent = '⚠️ Voice input not supported in this browser. Try Chrome or Edge.';
+            document.getElementById('micBtn').style.display = 'none';
+        }
+        
+        function toggleVoiceInput() {
+            voiceInputEnabled = !voiceInputEnabled;
+            const btn = document.getElementById('enableVoiceBtn');
+            if (voiceInputEnabled) {
+                btn.classList.add('active');
+                btn.innerHTML = '🎤 Voice Input: ON';
+                document.getElementById('micBtn').style.display = 'flex';
+                document.getElementById('voiceStatus').textContent = 'Click the microphone button to speak!';
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '🎤 Enable Voice Input';
+                document.getElementById('micBtn').style.display = 'none';
+                stopListening();
+            }
+        }
+        
+        function toggleListening() {
+            if (!recognition) {
+                alert('Voice recognition not supported. Please use Chrome or Edge browser.');
+                return;
+            }
+            
+            if (isListening) {
+                recognition.stop();
+            } else {
+                // Set language based on selection or use auto-detect
+                const langToUse = (currentLanguage === 'auto') ? detectedLanguage : currentLanguage;
+                recognition.lang = speechLanguages[langToUse] || 'en-US';
+                recognition.start();
+            }
+        }
+        
+        function stopListening() {
+            isListening = false;
+            document.getElementById('micBtn').classList.remove('listening');
+            document.getElementById('voiceIndicator').style.display = 'none';
+            document.getElementById('voiceWave').style.display = 'none';
+            if (voiceInputEnabled) {
+                document.getElementById('voiceStatus').textContent = 'Click the microphone to speak!';
+            }
+        }
+        
+        function toggleVoiceOutput() {
+            autoSpeakEnabled = !autoSpeakEnabled;
+            const btn = document.getElementById('speakResponseBtn');
+            if (autoSpeakEnabled) {
+                btn.style.background = '#10b981';
+                btn.innerHTML = '🔊 Auto-Speak: ON';
+            } else {
+                btn.style.background = '#6b7280';
+                btn.innerHTML = '🔊 Auto-Speak: OFF';
+            }
+        }
+        
+        function speakText(text, lang = null) {
+            if (!synth) {
+                console.error('Speech synthesis not supported');
+                return;
+            }
+            
+            // Cancel any ongoing speech
+            synth.cancel();
+            
+            // Use detected language if auto, otherwise use selected or provided language
+            const langToSpeak = (currentLanguage === 'auto') ? (detectedLanguage || 'en') : (lang || currentLanguage);
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = speechLanguages[langToSpeak] || 'en-US';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            
+            // Try to get a natural voice
+            const voices = synth.getVoices();
+            const preferredVoice = voices.find(v => v.lang.startsWith(langToSpeak));
+            if (preferredVoice) {
+                utterance.voice = preferredVoice;
+            }
+            
+            synth.speak(utterance);
+        }
+        
+        function speakLastResponse() {
+            if (lastBotResponse) {
+                // Strip HTML tags for cleaner speech
+                const plainText = lastBotResponse.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                speakText(plainText);
+            } else {
+                alert('No response to speak yet!');
+            }
+        }
+        
+        function detectLanguageFromText(text) {
+            // Simple language detection based on character patterns
+            // Marathi/Hindi use Devanagari script (ऀ-ॿ : \u0900-\u097F)
+            const devanagariChars = (text.match(/[\u0900-\u097F]/g) || []).length;
+            const totalChars = text.length;
+            
+            // Marathi specific words
+            const marathiWords = ['आहे', 'आहेत', 'मी', 'तू', 'का', 'कसा', 'काय', 'शी', 'ला', 'मध्ये', 
+                                 'वर', 'खाली', 'पासून', 'हा', 'हे', 'ती', 'ते', 'कोण', 'कुठे'];
+            // Hindi specific words
+            const hindiWords = ['है', 'हैं', 'मैं', 'तू', 'क्या', 'कैसा', 'कौन', 'कहाँ', 'कितना', 'कब'];
+            
+            let marathiScore = 0;
+            let hindiScore = 0;
+            
+            marathiWords.forEach(word => {
+                if (text.includes(word)) marathiScore++;
+            });
+            hindiWords.forEach(word => {
+                if (text.includes(word)) hindiScore++;
+            });
+            
+            // Add Devanagari character weight
+            if (devanagariChars > totalChars * 0.2) {
+                marathiScore += devanagariChars / 5;
+                hindiScore += devanagariChars / 5;
+            }
+            
+            if (marathiScore > hindiScore && marathiScore > 0) {
+                return 'mr';
+            } else if (hindiScore > marathiScore && hindiScore > 0) {
+                return 'hi';
+            } else if (devanagariChars > totalChars * 0.3) {
+                return 'mr'; // More Devanagari = likely Marathi
+            }
+            
+            return 'en'; // Default to English
+        }
+        
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            document.querySelectorAll('.language-select button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+            
+            // If auto-detect is selected, reset to auto mode
+            if (lang !== 'auto' && detectedLanguage !== lang) {
+                detectedLanguage = lang;
+            }
+            
+            // Update recognition language
+            const langToUse = (currentLanguage === 'auto') ? detectedLanguage : currentLanguage;
+            if (recognition) {
+                recognition.lang = speechLanguages[langToUse] || 'en-US';
+            }
+            
+            // Update status
+            const statusTexts = {
+                'auto': '🎤 मी तुमची भाषा ओळखेन! / I will detect your language!',
+                'en': '🎤 Click the microphone to speak!',
+                'mr': '🎤 बोलण्यासाठी मायक्रोफोनवर क्लिक करा!',
+                'hi': '🎤 बोलने के लिए माइक पर क्लिक करें!'
+            };
+            document.getElementById('voiceStatus').textContent = statusTexts[lang] || statusTexts['auto'];
+        }
+        
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+        
+        function sendQuickReply(message) {
+            document.getElementById('userInput').value = message;
+            sendMessage();
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            // If auto-detect mode, detect language from typed/spoken message
+            if (currentLanguage === 'auto') {
+                detectedLanguage = detectLanguageFromText(message);
+                console.log('Detected language from message:', detectedLanguage);
+                
+                // Update UI to show detected language
+                document.querySelectorAll('.language-select button').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('btn-auto').classList.add('active');
+                document.getElementById('btn-auto').textContent = '🔄 ' + (detectedLanguage === 'mr' ? 'मराठी' : detectedLanguage === 'hi' ? 'हिंदी' : 'English');
+            }
+            
+            // Add user message
+            const chatArea = document.getElementById('chatArea');
+            chatArea.innerHTML += '<div class="message user-message">' + message + '</div>';
+            input.value = '';
+            
+            // Show typing indicator
+            chatArea.innerHTML += '<div class="message bot-message" id="typing"><span class="typing">🤖 Thinking...</span></div>';
+            chatArea.scrollTop = chatArea.scrollHeight;
+            
+            // Send to server - use detected language for response
+            const langToSend = (currentLanguage === 'auto') ? detectedLanguage : currentLanguage;
+            const formData = new FormData();
+            formData.append('message', message);
+            formData.append('language', langToSend);
+            
+            fetch('/get', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('typing').remove();
+                chatArea.innerHTML += '<div class="message bot-message" id="lastBotMessage">' + data + '</div>';
+                chatArea.scrollTop = chatArea.scrollHeight;
+                
+                // Store last response for manual speak
+                lastBotResponse = data;
+                
+                // Auto-speak if enabled - use detected language
+                if (autoSpeakEnabled) {
+                    const plainText = data.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                    speakText(plainText, langToSend);
+                }
+            })
+            .catch(error => {
+                document.getElementById('typing').remove();
+                chatArea.innerHTML += '<div class="message bot-message">Sorry, something went wrong! Please try again.</div>';
+            });
+        }
+        
+        // Load voices (needed for some browsers)
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = function() {
+                console.log('Voices loaded:', synth.getVoices().length);
+            };
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Prediction - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        .content { padding: 30px; }
+        .salary-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .salary-card h2 { color: #333; font-size: 20px; margin-bottom: 15px; }
+        .salary-card p { color: #666; font-size: 28px; font-weight: 700; color: #667eea; }
+        .salary-levels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .level-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .level-box h4 { color: #667eea; font-size: 14px; margin-bottom: 8px; }
+        .level-box p { color: #333; font-size: 16px; font-weight: 700; }
+        .growth {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Salary Prediction</h1>
+            <p>For: {{ career }}</p>
+        </div>
+        <div class="content">
+            <div class="salary-card">
+                <h2>Average Salary Range</h2>
+                <p>{{ salary_data.entry }} - {{ salary_data.senior }}</p>
+            </div>
+            <div class="salary-levels">
+                <div class="level-box">
+                    <h4>Entry Level</h4>
+                    <p>{{ salary_data.entry }}</p>
+                </div>
+                <div class="level-box">
+                    <h4>Mid Level</h4>
+                    <p>{{ salary_data.mid }}</p>
+                </div>
+                <div class="level-box">
+                    <h4>Senior Level</h4>
+                    <p>{{ salary_data.senior }}</p>
+                </div>
+            </div>
+            <div class="growth">
+                📈 Growth Rate: {{ salary_data.growth_rate }}
+            </div>
+            <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

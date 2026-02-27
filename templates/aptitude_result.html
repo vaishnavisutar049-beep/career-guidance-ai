@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptitude Result - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 { font-size: 26px; margin-bottom: 10px; }
+        .score-display {
+            font-size: 48px;
+            font-weight: 800;
+            margin: 20px 0;
+        }
+        .content { padding: 30px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stat-box span { font-size: 24px; font-weight: 700; color: #667eea; display: block; }
+        .stat-box small { font-size: 11px; color: #666; }
+        .recommendation {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .recommendation h3 { color: #667eea; margin-bottom: 10px; }
+        .recommendation p { color: #555; font-size: 14px; line-height: 1.6; }
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Your Aptitude Score</h1>
+            <div class="score-display">{{ overall_score }}%</div>
+        </div>
+        <div class="content">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span>{{ logical_score }}</span>
+                    <small>Logical</small>
+                </div>
+                <div class="stat-box">
+                    <span>{{ verbal_score }}</span>
+                    <small>Verbal</small>
+                </div>
+                <div class="stat-box">
+                    <span>{{ numerical_score }}</span>
+                    <small>Numerical</small>
+                </div>
+            </div>
+            <div class="recommendation">
+                <h3>💡 Recommendation</h3>
+                <p>{{ recommendation }}</p>
+            </div>
+            <div class="btn-group">
+                <a href="/career-suggestions" class">Get Career Suggestions="btn btn-primary</a>
+                <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

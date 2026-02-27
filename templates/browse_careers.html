@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#667eea">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Browse Careers - Career Guidance AI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 35px 30px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        .header p { font-size: 15px; opacity: 0.9; }
+        
+        .content { padding: 30px; }
+        
+        .category-section {
+            margin-bottom: 35px;
+        }
+        .category-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .careers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .career-card {
+            background: white;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .career-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+        }
+        .career-card h3 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .career-card p {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .career-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .info-tag {
+            background: #f0f0f0;
+            color: #555;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .salary-tag {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .stability-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-left: 3px;
+        }
+        .risk-tag {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-left: 3px;
+        }
+        .career-card a {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .career-card a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin: 20px 30px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        
+        .search-box {
+            margin: 20px 30px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Browse All Careers</h1>
+            <p>Explore different career options and find your perfect path</p>
+        </div>
+        
+        <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        <a href="/career-suggestions" class="back-link">Get Suggestions →</a>
+        
+        <div class="content">
+            {% for category, career_keys in categories.items() %}
+            <div class="category-section">
+                <div class="category-title">{{ category }}</div>
+                <div class="careers-grid">
+                    {% for key in career_keys %}
+                    {% if key in careers %}
+                    <div class="career-card">
+                        <h3>{{ careers[key].career }}</h3>
+                        <p>{{ careers[key].future_scope[:100] }}...</p>
+                        <div class="career-info">
+                            <span class="salary-tag">{{ careers[key].salary }}</span>
+                            {% if careers[key].stability %}
+                            <span class="stability-tag">{{ careers[key].stability }}</span>
+                            {% endif %}
+                            {% if careers[key].risk_level %}
+                            <span class="risk-tag">{{ careers[key].risk_level }}</span>
+                            {% endif %}
+                        </div>
+                        <a href="/career-details/{{ key }}">View Details →</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Floating Chatbot Button -->
+    <a href="/chat" class="floating-chatbot" title="Chat with AI Assistant">
+        🤖
+    </a>
+</body>
+</html>

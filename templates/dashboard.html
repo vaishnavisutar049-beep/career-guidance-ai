@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="Career Guidance AI - Advanced Features">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Dashboard - Career Guidance AI</title>
+    <style>
+        /* Language Selector Styles */
+        .lang-selector {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+        }
+        
+        .lang-selector select {
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+        
+        .lang-selector select:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: white;
+        }
+        
+        .lang-selector select option {
+            background: #667eea;
+            color: white;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --success: #43e97b;
+            --warning: #fa709a;
+            --info: #4facfe;
+            --dark: #2d3748;
+            --light: #f7fafc;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            padding: 15px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 35px 25px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .header h1 { 
+            font-size: 28px; 
+            margin-top: 15px; 
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p { 
+            font-size: 14px; 
+            opacity: 0.95; 
+            margin-top: 8px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .welcome {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .welcome::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #f093fb, #43e97b);
+        }
+        
+        .welcome h2 { 
+            color: #667eea; 
+            font-size: 22px; 
+            font-weight: 700;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .welcome p {
+            color: #666;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        
+        .welcome .stats {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 18px;
+        }
+        
+        .welcome .stat-box {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            min-width: 100px;
+        }
+        
+        .welcome .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .welcome .stat-box span { 
+            font-size: 28px; 
+            font-weight: 800; 
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .welcome .stat-box small { 
+            display: block; 
+            font-size: 12px; 
+            color: #888;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+        
+        .section-title {
+            padding: 18px 20px 12px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #2d3748;
+            background: #fff;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #667eea;
+        }
+        
+        .menu {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .menu-item {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+        }
+        
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .menu-item:hover { 
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.25);
+            border-color: #667eea;
+        }
+        
+        .menu-item:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .menu-item:nth-child(1) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .menu-item:nth-child(2) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .menu-item:nth-child(3) { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .menu-item:nth-child(4) { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .menu-item:nth-child(5) { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .menu-item:nth-child(6) { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .menu-item:nth-child(7) { background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); }
+        .menu-item:nth-child(8) { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
+        .menu-item:nth-child(9) { background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%); }
+        
+        .menu-item.new-feature {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(255, 107, 107, 0); }
+        }
+        
+        .menu-item a {
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            display: block;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .menu-item .icon { 
+            font-size: 36px; 
+            margin-bottom: 8px; 
+            display: block;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+        }
+        
+        .menu-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 20px 20px;
+        }
+        
+        .menu-row .menu-item {
+            padding: 22px 15px;
+        }
+        
+        .menu-row .menu-item a { 
+            font-size: 13px; 
+        }
+        
+        .credits {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                border-radius: 15px;
+                max-width: 100%;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .header img {
+                width: 70px;
+                height: 70px;
+                border: 3px solid white;
+            }
+            
+            .header h1 {
+                font-size: 1.1rem;
+                margin-top: 10px;
+            }
+            
+            .header p {
+                font-size: 12px;
+            }
+            
+            .welcome {
+                padding: 15px;
+            }
+            
+            .welcome h2 {
+                font-size: 16px;
+            }
+            
+            .welcome p {
+                font-size: 11px;
+            }
+            
+            .welcome .stats {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .welcome .stat-box {
+                padding: 10px 15px;
+                min-width: 70px;
+            }
+            
+            .welcome .stat-box span {
+                font-size: 20px;
+            }
+            
+            .welcome .stat-box small {
+                font-size: 10px;
+            }
+            
+            .section-title {
+                padding: 12px 15px 10px;
+                font-size: 14px;
+            }
+            
+            .menu {
+                padding: 10px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .menu-item {
+                padding: 12px 6px;
+                border-radius: 12px;
+            }
+            
+            .menu-item .icon {
+                font-size: 24px;
+                margin-bottom: 4px;
+            }
+            
+            .menu-item a {
+                font-size: 9px;
+                line-height: 1.2;
+            }
+            
+            .menu-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                padding: 0 10px 10px;
+            }
+            
+            .menu-row .menu-item {
+                padding: 12px 8px;
+            }
+            
+            .menu-row .menu-item a {
+                font-size: 9px;
+            }
+            
+            .menu-row .menu-item .icon {
+                font-size: 22px;
+            }
+            
+            .quick-access {
+                padding: 0 10px 10px;
+            }
+            
+            .quick-card {
+                min-width: 60px;
+                padding: 8px 5px;
+            }
+            
+            .quick-card i {
+                font-size: 18px;
+            }
+            
+            .quick-card span {
+                font-size: 8px;
+            }
+            
+            .lang-selector {
+                top: 8px;
+                right: 8px;
+            }
+            
+            .lang-selector select {
+                padding: 4px 6px;
+                font-size: 9px;
+            }
+            
+            .credits {
+                padding: 15px;
+            }
+            
+            .credits h3 {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            .credits p {
+                font-size: 11px;
+                margin: 5px 0;
+            }
+            
+            .footer {
+                padding: 15px;
+            }
+            
+            .footer a {
+                padding: 10px 25px;
+                font-size: 13px;
+            }
+            
+            .admin-link {
+                padding: 10px;
+                font-size: 11px;
+            }
+            
+            .badge {
+                font-size: 7px;
+                padding: 2px 5px;
+            }
+        }
+        
+        /* Floating Chatbot Button - Shows on both Mobile and Desktop */
+        .floating-chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 32px;
+            box-shadow: 0 5px 25px rgba(102, 126, 234, 0.6);
+            z-index: 1000;
+            cursor: pointer;
+            animation: floatPulse 2s infinite;
+            border: none;
+            text-decoration: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @keyframes floatPulse {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @media (min-width: 481px) and (max-width: 768px) {
+            .menu {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .menu-item .icon {
+                font-size: 28px;
+            }
+            
+            .menu-item a {
+                font-size: 10px;
+            }
+            
+            .header img {
+                width: 85px;
+                height: 85px;
+            }
+            
+            .header h1 {
+                font-size: 1.4rem;
+            }
+        }
+        
+        .credits::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+        
+        .credits h3 { 
+            font-size: 18px; 
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .credits p { 
+            font-size: 13px; 
+            margin: 8px 0;
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .footer { 
+            padding: 20px; 
+            text-align: center; 
+            background: #f5f5f5;
+        }
+        
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 30px;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .footer a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        
+        .badge {
+            background: #ff6b6b;
+            color: white;
+            font-size: 9px;
+            padding: 3px 7px;
+            border-radius: 10px;
+            margin-left: 5px;
+            font-weight: 700;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        .admin-link {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            color: #667eea;
+            font-size: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .admin-link:hover {
+            color: #764ba2;
+        }
+        
+        /* Quick Access Cards */
+        .quick-access {
+            display: flex;
+            gap: 10px;
+            padding: 0 20px 15px;
+            overflow-x: auto;
+        }
+        
+        .quick-card {
+            min-width: 80px;
+            padding: 12px;
+            border-radius: 15px;
+            text-align: center;
+            background: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .quick-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .quick-card i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .quick-card span {
+            font-size: 10px;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        /* Progress Ring */
+        .progress-ring {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+        }
+        
+        .progress-ring circle {
+            fill: transparent;
+            stroke-width: 4;
+        }
+        
+        .progress-ring .bg {
+            stroke: rgba(255,255,255,0.3);
+        }
+        
+        .progress-ring .progress {
+            stroke: white;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 1s;
+        }
+        
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: particleFloat 10s infinite;
+        }
+        
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <!-- Language Selector -->
+            <div class="lang-selector">
+                <select onchange="window.location.href=this.value">
+                    <option value="{{ url_for('set_language', lang='en') }}" {% if current_lang == 'en' %}selected{% endif %}>English</option>
+                    <option value="{{ url_for('set_language', lang='mr') }}" {% if current_lang == 'mr' %}selected{% endif %}>मराठी</option>
+                    <option value="{{ url_for('set_language', lang='hi') }}" {% if current_lang == 'hi' %}selected{% endif %}>हिंदी</option>
+                </select>
+            </div>
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=200&h=200&fit=crop" alt="Career Guidance">
+            <h1>{{ t['career_guidance'] }} AI 🤖</h1>
+            <p>{{ t['find_your_path'] }} 🚀</p>
+        </div>
+
+        <div class="welcome">
+            <h2>{{ t['welcome'] }}, {{name}}! 👋</h2>
+            <p>{{ t['welcome_message'] }}</p>
+            <div class="stats">
+                <div class="stat-box">
+                    <span>0</span>
+                    <small>{{ t['nav_courses'] }}</small>
+                </div>
+                <div class="stat-box">
+                    <span>0</span>
+                    <small>{{ t['nav_certificates'] }}</small>
+                </div>
+                <div class="stat-box">
+                    <span>0</span>
+                    <small>Badges</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <i class="fas fa-rocket"></i>
+            {{ t['features'] }}
+        </div>
+        <div class="menu">
+            <div class="menu-item new-feature">
+                <span class="icon">🎯</span>
+                <a href="/career-suggestions">{{ t['career_suggestions'] }}</a>
+            </div>
+
+            <div class="menu-item">
+                <span class="icon">📝</span>
+                <a href="/test">{{ t['take_test'] }}</a>
+            </div>
+
+            <div class="menu-item">
+                <span class="icon">🤖</span>
+                <a href="/chat">{{ t['nav_chatbot'] }}</a>
+            </div>
+
+            <div class="menu-item">
+                <span class="icon">🧠</span>
+                <a href="/personality-test">{{ t['personality_test'] }}</a>
+            </div>
+
+            <div class="menu-item">
+                <span class="icon">📊</span>
+                <a href="/aptitude-test">{{ t['aptitude_test'] }}</a>
+            </div>
+
+            <div class="menu-item">
+                <span class="icon">💰</span>
+                <a href="/salary-predict">{{ t['predict_salary'] }}</a>
+            </div>
+            
+            <div class="menu-item">
+                <span class="icon">🏫</span>
+                <a href="/colleges">{{ t['nav_colleges'] }}</a>
+            </div>
+            
+            <div class="menu-item">
+                <span class="icon">📚</span>
+                <a href="/browse-careers">{{ t['browse_careers'] }}</a>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <i class="fas fa-graduation-cap"></i>
+            Learning & Progress
+        </div>
+        <div class="menu-row">
+            <div class="menu-item">
+                <span class="icon">🎓</span>
+                <a href="/courses">{{ t['nav_courses'] }}</a>
+            </div>
+
+            <div class="menu-item">
+                <span class="icon">📈</span>
+                <a href="/progress">{{ t['nav_progress'] }}</a>
+            </div>
+
+            <div class="menu-item">
+                <span class="icon">🏆</span>
+                <a href="/certificates">{{ t['nav_certificates'] }}</a>
+            </div>
+
+            <div class="menu-item">
+                <span class="icon">📄</span>
+                <a href="/resume-builder">{{ t['resume_builder'] }}</a>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <i class="fas fa-users"></i>
+            Expert Help
+        </div>
+        <div class="menu-row">
+            <div class="menu-item">
+                <span class="icon">👨‍🏫</span>
+                <a href="/mentors">{{ t['nav_mentors'] }}</a>
+            </div>
+
+            <div class="menu-item">
+                <span class="icon">📋</span>
+                <a href="/result">My Results</a>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <i class="fas fa-family"></i>
+            For Parents
+        </div>
+        <div class="menu-row">
+            <div class="menu-item new-feature">
+                <span class="icon">👨‍👩‍👧</span>
+                <a href="/parents-corner">{{ t['nav_parents'] }}</a>
+            </div>
+            
+            <div class="menu-item new-feature">
+                <span class="icon">⚖️</span>
+                <a href="/conflict-analyzer">Conflict Analyzer</a>
+            </div>
+        </div>
+
+        <div class="credits">
+            <h3>✨ Project Created By ✨</h3>
+            <p>💜 Sakhi Suresh Chavan</p>
+            <p>💙 Vaishnavi Shankar Sutar</p>
+            <p>💚 Tanuja Tatoba Patil</p>
+            <p>💛 Dnyaneshwari Pandharinath Sutar</p>
+        </div>
+
+        <div class="footer">
+            <a href="/logout">{{ t['logout'] }} 👋</a>
+        </div>
+        
+        <a href="/admin-login" class="admin-link">{{ t['admin_login'] }}</a>
+    </div>
+    
+    <!-- Floating Chatbot Button -->
+    <a href="/chat" class="floating-chatbot" title="Chat with AI Assistant">
+        🤖
+    </a>
+</body>
+</html>

@@ -1,0 +1,23 @@
+body {
+    font-family: Arial;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+input, select {
+    padding: 8px;
+    margin: 5px;
+    width: 200px;
+}
+
+button {
+    padding: 8px 15px;
+    background-color: blue;
+    color: white;
+    border: none;
+}
+
+a {
+    text-decoration: none;
+    color: green;
+}

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="Parents Corner - Career Guidance for Parents">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Parents Corner - Career Guidance AI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 { font-size: 32px; margin-bottom: 10px; }
+        .header p { font-size: 16px; opacity: 0.9; }
+        
+        .nav {
+            background: #f8f9fa;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #eee;
+        }
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: white;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .nav a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #f093fb;
+        }
+        
+        .section p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        .info-card h3 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .info-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .info-card .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .tips-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .tips-list li {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .tips-list li strong {
+            color: #667eea;
+        }
+        
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .resource-card {
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        .resource-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+        .resource-card h3 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .resource-card p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            margin-top: 30px;
+        }
+        .cta-section h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .cta-section p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+        }
+        .cta-section a {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 0.3s;
+        }
+        .cta-section a:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+        }
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 600px) {
+            .header { padding: 30px 20px; }
+            .header h1 { font-size: 24px; }
+            .content { padding: 20px; }
+            .nav { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👨‍👩‍👧 Parents Corner</h1>
+            <p>Supporting Your Child's Career Journey</p>
+        </div>
+        
+        <div class="nav">
+            <a href="/">🏠 Home</a>
+            <a href="/login">👤 Student Login</a>
+            <a href="/register">📝 Register</a>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>🌟 Welcome, Parents!</h2>
+                <p>
+                    As a parent, you play a crucial role in guiding your child's career decisions. 
+                    This section provides you with valuable resources, tips, and information to help 
+                    support your child in making informed career choices.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2>🎯 How You Can Help</h2>
+                <ul class="tips-list">
+                    <li>
+                        <strong>👂 Listen & Understand:</strong> Have open conversations about your child's 
+                        interests, strengths, and aspirations without imposing your own expectations.
+                    </li>
+                    <li>
+                        <strong>🔍 Explore Options:</strong> Encourage your child to explore different career 
+                        paths through our AI-powered career suggestions and aptitude tests.
+                    </li>
+                    <li>
+                        <strong>📚 Support Learning:</strong> Motivate your child to take courses and earn 
+                        certificates that align with their chosen career path.
+                    </li>
+                    <li>
+                        <strong>🤝 Connect with Mentors:</strong> Help your child find mentors in their 
+                        field of interest for guidance and real-world insights.
+                    </li>
+                    <li>
+                        <strong>💪 Be Patient:</strong> Career discovery is a journey. Support your child 
+                        through the process and celebrate their progress.
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>📊 Understanding Career Tests</h2>
+                <p>
+                    Our platform offers various assessments to help your child discover their strengths:
+                </p>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <span class="icon">🧠</span>
+                        <h3>Aptitude Test</h3>
+                        <p>Evaluates natural abilities and potential in different areas like logical reasoning, numerical ability, and verbal skills.</p>
+                    </div>
+                    <div class="info-card">
+                        <span class="icon">💭</span>
+                        <h3>Personality Test</h3>
+                        <p>Identifies personality traits and work preferences to suggest careers that match your child's character.</p>
+                    </div>
+                    <div class="info-card">
+                        <span class="icon">🎯</span>
+                        <h3>Career Suggestions</h3>
+                        <p>AI-powered recommendations based on interests, skills, and personality to guide career decisions.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>📖 Key Career Areas</h2>
+                <div class="resources">
+                    <div class="resource-card">
+                        <h3>💻 Technology & IT</h3>
+                        <p>Software development, data science, AI/ML, cybersecurity, and web development - high-growth fields with excellent opportunities.</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>🏥 Healthcare</h3>
+                        <p>Medicine, nursing, pharmacy, and allied health professions - always in demand with job security and growth potential.</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>💰 Business & Finance</h3>
+                        <p>Finance, marketing, entrepreneurship, and management - versatile careers with leadership opportunities.</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>🎨 Creative Arts</h3>
+                        <p>Design, media, entertainment, and writing - fulfilling careers for creative minds with passion and talent.</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>🔬 Science & Research</h3>
+                        <p>Research, engineering, physics, and chemistry - for those who want to innovate and discover new things.</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>📚 Education</h3>
+                        <p>Teaching, training, and academic careers - shaping the future generation while building expertise.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>📱 Useful Features for Students</h2>
+                <p>Your child can access these features after registration:</p>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <span class="icon">📝</span>
+                        <h3>Career Tests</h3>
+                        <p>Take aptitude and personality tests to discover suitable career paths.</p>
+                    </div>
+                    <div class="info-card">
+                        <span class="icon">💼</span>
+                        <h3>Resume Builder</h3>
+                        <p>Create professional resumes to showcase skills and achievements.</p>
+                    </div>
+                    <div class="info-card">
+                        <span class="icon">🏫</span>
+                        <h3>College Finder</h3>
+                        <p>Search and compare colleges based on courses, fees, and placements.</p>
+                    </div>
+                    <div class="info-card">
+                        <span class="icon">💵</span>
+                        <h3>Salary Predictor</h3>
+                        <p>Get estimated salary ranges for different careers.</p>
+                    </div>
+                    <div class="info-card">
+                        <span class="icon">📚</span>
+                        <h3>Course Recommendations</h3>
+                        <p>Find relevant courses to build skills for chosen careers.</p>
+                    </div>
+                    <div class="info-card">
+                        <span class="icon">🤖</span>
+                        <h3>AI Career Chatbot</h3>
+                        <p>Get instant answers to career-related questions.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <h3>🚀 Get Started Today!</h3>
+                <p>Encourage your child to create an account and explore their career potential with our AI-powered tools.</p>
+                <a href="/register">Create Student Account →</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 Career Guidance AI | <a href="/">Back to Home</a></p>
+        </div>
+    </div>
+</body>
+</html>

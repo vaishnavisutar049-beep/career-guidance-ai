@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificates - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        .content { padding: 30px; }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .empty-state h3 { margin-bottom: 10px; }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 Your Certificates</h1>
+        </div>
+        <div class="content">
+            {% if certificates %}
+                {% for cert in certificates %}
+                <div style="background:#f8f9fa;padding:20px;border-radius:15px;margin-bottom:15px;">
+                    <h3>{{ cert[3] }}</h3>
+                    <p style="color:#666;font-size:13px;">{{ cert[4] }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="empty-state">
+                <h3>🎉 No Certificates Yet</h3>
+                <p>Complete courses to earn certificates!</p>
+            </div>
+            {% endif %}
+            <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

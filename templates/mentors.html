@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentors - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .content { padding: 30px; }
+        .mentor-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .mentor-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+        .mentor-info h3 { color: #333; font-size: 18px; margin-bottom: 5px; }
+        .mentor-info p { color: #666; font-size: 13px; }
+        .mentor-info .company { color: #667eea; font-weight: 600; }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👨‍🏫 Expert Mentors</h1>
+            <p>Connect with industry experts</p>
+        </div>
+        <div class="content">
+            {% for mentor in mentors %}
+            <div class="mentor-card">
+                <div class="mentor-avatar">👤</div>
+                <div class="mentor-info">
+                    <h3>{{ mentor[1] }}</h3>
+                    <p class="company">{{ mentor[3] }}</p>
+                    <p>{{ mentor[2] }} • {{ mentor[4] }} Experience</p>
+                </div>
+            </div>
+            {% endfor %}
+            <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

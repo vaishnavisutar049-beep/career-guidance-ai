@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Resume Builder - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f64f59 100%);
+            padding: 35px 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -15%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .header h1 { 
+            font-size: 28px; 
+            margin-bottom: 8px; 
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+        .header p { 
+            font-size: 14px; 
+            opacity: 0.95; 
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content { padding: 35px; }
+        
+        /* Photo Upload */
+        .photo-upload {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        .photo-preview-container {
+            position: relative;
+            display: inline-block;
+        }
+        .photo-preview {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #667eea;
+            margin: 0 auto 15px;
+            display: block;
+            background: #f8f9fa;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+            transition: transform 0.3s;
+        }
+        .photo-preview:hover {
+            transform: scale(1.05);
+        }
+        .photo-upload input[type="file"] {
+            display: none;
+        }
+        .photo-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .photo-label:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.45);
+        }
+        
+        /* Form Styles */
+        .form-group { margin-bottom: 24px; }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-group label i {
+            color: #667eea;
+            width: 22px;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.12);
+            background: white;
+        }
+        .form-group textarea {
+            height: 110px;
+            resize: vertical;
+        }
+        
+        /* Section Divider */
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+            margin: 35px 0;
+        }
+        
+        .section-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .section-title i {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        /* Tips Box */
+        .tips-box {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f4f8 100%);
+            padding: 22px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+            border-right: 1px solid #e0e0e0;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .tips-box h4 {
+            color: #1e3c72;
+            font-size: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tips-box ul {
+            list-style: none;
+            font-size: 13px;
+            color: #555;
+        }
+        .tips-box li {
+            padding: 6px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            line-height: 1.5;
+        }
+        .tips-box li i {
+            color: #43e97b;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+        
+        /* Buttons */
+        .btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.45);
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: #764ba2;
+        }
+        
+        /* Form Hints */
+        .form-hint {
+            font-size: 12px;
+            color: #888;
+            margin-top: 6px;
+            font-style: italic;
+        }
+        
+        /* Career Target Select */
+        .career-target-group {
+            background: linear-gradient(135deg, #fff5f5 0%, #fff0f6 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid #ffe0e0;
+        }
+        
+        /* Row Layout */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .content { padding: 22px; }
+            .header h1 { font-size: 23px; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-file-word"></i> Professional Resume Builder</h1>
+            <p>Create a powerful resume that stands out to employers</p>
+        </div>
+        
+        <div class="content">
+            <div class="tips-box">
+                <h4><i class="fas fa-lightbulb"></i> 💡 Resume Writing Tips for Maximum Impact</h4>
+                <ul>
+                    <li><i class="fas fa-check"></i> <strong>Keep it concise:</strong> 1-2 pages maximum, recruiters spend 6-7 seconds scanning</li>
+                    <li><i class="fas fa-check"></i> <strong>Use action verbs:</strong> "Led", "Developed", "Achieved" instead of "Did", "Made"</li>
+                    <li><i class="fas fa-check"></i> <strong>Quantify achievements:</strong> Use numbers like "Improved efficiency by 40%"</li>
+                    <li><i class="fas fa-check"></i> <strong>Tailor for each job:</strong> Match keywords from job description</li>
+                    <li><i class="fas fa-check"></i> <strong>Proofread carefully:</strong> Errors can cost you the interview</li>
+                </ul>
+            </div>
+            
+            <form method="POST" enctype="multipart/form-data">
+                <!-- Photo Upload -->
+                <div class="photo-upload">
+                    <div class="photo-preview-container">
+                        <img id="photoPreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130' viewBox='0 0 24 24' fill='%23ccc'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Photo" class="photo-preview">
+                    </div>
+                    <br>
+                    <label for="photo" class="photo-label">
+                        <i class="fas fa-camera"></i> Upload Your Photo
+                    </label>
+                    <input type="file" id="photo" name="photo" accept="image/*" onchange="previewPhoto(event)">
+                    <p class="form-hint">Upload a professional photo with clear background</p>
+                </div>
+                
+                <div class="section-title">
+                    <i class="fas fa-id-card"></i> Personal Information
+                </div>
+                
+                <!-- Career Target -->
+                <div class="career-target-group">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label><i class="fas fa-bullseye"></i> Target Job Title</label>
+                        <input type="text" name="career_target" placeholder="e.g., Software Developer, Data Analyst, Marketing Manager" required>
+                        <p class="form-hint">The job title you're targeting - this will appear prominently on your resume</p>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Full Name</label>
+                        <input type="text" name="name" placeholder="Your Full Name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> Location</label>
+                        <input type="text" name="location" placeholder="City, State, Country">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" name="email" placeholder="your.email@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Phone Number</label>
+                        <input type="text" name="phone" placeholder="+91 9876543210">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fab fa-linkedin"></i> LinkedIn Profile</label>
+                        <input type="text" name="linkedin" placeholder="linkedin.com/in/yourprofile">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-globe"></i> Portfolio/Website (Optional)</label>
+                        <input type="text" name="portfolio" placeholder="yourportfolio.com">
+                    </div>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <div class="section-title">
+                    <i class="fas fa-star"></i> Professional Summary
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-align-left"></i> Career Objective / Summary</label>
+                    <textarea name="summary" placeholder="Write a powerful 2-3 sentence summary that highlights:
+• Your professional identity and experience level
+• Your key skills and competencies  
+• What you bring to the organization
+
+Example:
+Dynamic Software Developer with 2+ years of experience in building scalable web applications. Proficient in Python, Java, and React.js with a proven track record of delivering 95% on-time project completion. Passionate about leveraging technology to solve complex business problems and drive organizational growth."></textarea>
+                    <p class="form-hint">This is the first thing recruiters read - make it compelling!</p>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <div class="section-title">
+                    <i class="fas fa-graduation-cap"></i> Education
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-school"></i> Educational Background</label>
+                    <textarea name="education" placeholder="Example:
+• B.Tech in Computer Science - MIT, Anna University (2024)
+  - CGPA: 8.5/10 (First Class with Distinction)
+  - Relevant Coursework: Data Structures, Algorithms, ML, Database Systems
+  - Achievements: Technical Club President, Coding Competition Winner
+
+• Higher Secondary (12th) - DAV School, CBSE (2020)
+  - Percentage: 92% (Science Stream)
+  - Subjects: Physics, Chemistry, Mathematics, Computer Science"></textarea>
+                    <p class="form-hint">Use bullet points (•) and bold text (**text**) for degree and achievements</p>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <div class="section-title">
+                    <i class="fas fa-tools"></i> Skills
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-cogs"></i> Technical Skills</label>
+                    <textarea name="skills" placeholder="Example:
+Programming Languages: Python, Java, JavaScript, C++
+Web Technologies: HTML, CSS, React.js, Node.js, Flask
+Databases: MySQL, MongoDB, PostgreSQL
+Tools & Platforms: Git, Docker, AWS, VS Code, Jira
+Soft Skills: Problem Solving, Team Leadership, Communication"></textarea>
+                    <p class="form-hint">Separate skills with commas - ATS systems scan for these keywords</p>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <div class="section-title">
+                    <i class="fas fa-user-graduate"></i> Internships
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-briefcase"></i> Internship Experience</label>
+                    <textarea name="internship" placeholder="Example:
+• Software Development Intern - Google (Summer 2024)
+  - Developed REST APIs using Python and Flask for internal tools
+  - Collaborated with cross-functional teams of 10+ engineers
+  - Key Achievement: Improved query response time by 35%
+
+• Data Analyst Intern - Amazon (Winter 2023)
+  - Analyzed large datasets using SQL and Tableau for business insights
+  - Created automated reports for leadership team
+  - Key Achievement: Identified cost-saving opportunities worth $50K"></textarea>
+                    <p class="form-hint">Use bullet points and highlight quantifiable achievements</p>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <div class="section-title">
+                    <i class="fas fa-briefcase"></i> Work Experience
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-building"></i> Professional Work Experience</label>
+                    <textarea name="experience" placeholder="Example:
+• Junior Software Developer - TCS, Mumbai (2024-Present)
+  - Developed and maintained enterprise web applications using Java, Spring Boot
+  - Collaborated with 15-member team to deliver projects on schedule
+  - Key Achievement: Reduced bug count by 40% through TDD implementation
+  - Technologies: Java, Spring Boot, Angular, MySQL
+
+• Web Developer - Startup XYZ, Pune (2023-2024)
+  - Built responsive websites for 20+ clients using React.js and Node.js
+  - Key Achievement: Increased client satisfaction rating to 4.8/5
+  - Technologies: React.js, Node.js, MongoDB, Stripe API"></textarea>
+                    <p class="form-hint">Focus on achievements and impact, not just duties</p>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <div class="section-title">
+                    <i class="fas fa-project-diagram"></i> Projects
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-code"></i> Academic / Personal Projects</label>
+                    <textarea name="projects" placeholder="Example:
+• Career Guidance AI - Final Year Project (2024)
+  - Built an AI-powered career recommendation system using ML algorithms
+  - Technologies: Python, Flask, Scikit-learn, HTML/CSS, MySQL
+  - Key Features: Personality test, Resume builder, Course suggestions
+  - Outcome: Deployed and used by 500+ students with 4.5 star rating
+
+• E-Commerce Platform - Web Development Project (2023)
+  - Created full-stack online shopping platform with payment integration
+  - Technologies: React.js, Node.js, MongoDB, Stripe API
+  - Key Features: User auth, Shopping cart, Order management
+  - Outcome: Successfully handled 1000+ orders in beta testing"></textarea>
+                    <p class="form-hint">Include technologies used and measurable outcomes</p>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <div class="section-title">
+                    <i class="fas fa-certificate"></i> Certifications
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-award"></i> Certifications & Online Courses</label>
+                    <textarea name="certifications" placeholder="Example:
+• Google Data Analytics Professional Certificate - Coursera (2024)
+• AWS Certified Solutions Architect - Amazon (2023)
+• Machine Learning Specialization - Stanford Online (2023)
+• Python for Data Science - IBM (2023)
+• Full Stack Web Development - freeCodeCamp (2023)"></textarea>
+                    <p class="form-hint">Include certification name, issuing organization, and year</p>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <div class="section-title">
+                    <i class="fas fa-language"></i> Languages
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-comments"></i> Languages Known</label>
+                    <textarea name="languages" placeholder="Example:
+• English - Professional Working Proficiency (Read, Write, Speak)
+• Hindi - Native or Bilingual Proficiency
+• Marathi - Native Proficiency
+• Additional: Basic German (Learning)"></textarea>
+                    <p class="form-hint">Mention your proficiency level for each language</p>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <div class="section-title">
+                    <i class="fas fa-heart"></i> Hobbies & Interests
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-running"></i> Hobbies & Personal Interests</label>
+                    <textarea name="hobbies" placeholder="Example:
+• Reading Tech Blogs - Stay updated with latest technology trends
+• Competitive Programming - Regular participant in coding contests
+• Photography - Amateur photographer, love capturing landscapes
+• Chess - Weekly tournaments at local chess club"></textarea>
+                    <p class="form-hint">Add hobbies that showcase soft skills or well-rounded personality</p>
+                </div>
+                
+                <button type="submit" class="btn">
+                    <i class="fas fa-magic"></i> Generate Professional Resume
+                </button>
+            </form>
+            
+            <a href="/dashboard" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+    </div>
+    
+    <script>
+        function previewPhoto(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('photoPreview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>

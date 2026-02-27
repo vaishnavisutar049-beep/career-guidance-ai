@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate - Career Guidance AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .actions {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover { transform: scale(1.05); }
+        
+        .btn-print {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .certificate {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 3px solid #667eea;
+            margin: 15px;
+            pointer-events: none;
+        }
+        
+        .certificate::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid #ddd;
+            pointer-events: none;
+        }
+        
+        .logo {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .presented {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        
+        .name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 42px;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        
+        .completion {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .course {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .career {
+            font-size: 16px;
+            color: #4caf50;
+            margin-bottom: 30px;
+        }
+        
+        .details {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .detail-item {
+            text-align: center;
+        }
+        
+        .detail-label {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .signature {
+            text-align: center;
+        }
+        
+        .sig-line {
+            width: 150px;
+            border-top: 1px solid #333;
+            margin: 0 auto 5px;
+        }
+        
+        .sig-title {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .verified {
+            color: #4caf50;
+            font-size: 12px;
+        }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .actions { display: none; }
+            .certificate { 
+                box-shadow: none; 
+                border-radius: 0;
+                padding: 20px;
+            }
+            .certificate::before {
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="actions">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <a href="/certificates" class="btn">← Back to Certificates</a>
+    </div>
+    
+    <div class="certificate">
+        <div class="logo">🎯</div>
+        <h1 class="title">Career Guidance AI</h1>
+        <p class="subtitle">Certificate of Completion</p>
+        
+        <p class="presented">This is to certify that</p>
+        <h2 class="name">{{ user_name }}</h2>
+        
+        <p class="completion">has successfully completed</p>
+        <h3 class="course">{{ certificate[1] }}</h3>
+        
+        <p class="career">Career Path: {{ certificate[2] }}</p>
+        
+        <div class="details">
+            <div class="detail-item">
+                <span class="detail-label">Certificate ID</span>
+                <strong>{{ certificate[0] }}</strong>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Issue Date</span>
+                <strong>{{ certificate[3] }}</strong>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="signature">
+                <div class="sig-line"></div>
+                <p class="sig-title">Program Director</p>
+            </div>
+            
+            <div class="verified">
+                ✓ Verified Certificate
+            </div>
+            
+            <div class="signature">
+                <div class="sig-line"></div>
+                <p class="sig-title">Career Advisor</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

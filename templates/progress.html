@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        .content { padding: 30px; }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📈 Your Progress</h1>
+        </div>
+        <div class="content">
+            {% if progress %}
+                {% for p in progress %}
+                <div style="background:#f8f9fa;padding:20px;border-radius:15px;margin-bottom:15px;">
+                    <h3>{{ p[2] }}</h3>
+                    <p style="color:#667eea;font-size:20px;font-weight:700;">{{ p[3] }}%</p>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="empty-state">
+                <h3>📊 No Progress Yet</h3>
+                <p>Start learning to track your progress!</p>
+            </div>
+            {% endif %}
+            <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

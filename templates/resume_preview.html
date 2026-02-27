@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Resume - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            padding: 25px;
+        }
+        .resume-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+        }
+        
+        /* Modern Header */
+        .resume-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+            padding: 45px 50px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .resume-header::before {
+            content: '';
+            position: absolute;
+            top: -60%;
+            right: -25%;
+            width: 450px;
+            height: 450px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 50%;
+        }
+        .resume-header::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            position: relative;
+            z-index: 1;
+        }
+        .profile-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid rgba(255,255,255,0.6);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+            transition: transform 0.3s;
+        }
+        .profile-photo:hover {
+            transform: scale(1.05);
+        }
+        .header-text h1 {
+            font-size: 34px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .header-text .career-target {
+            background: rgba(255,255,255,0.25);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        /* Contact Bar */
+        .contact-bar {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            border-bottom: 4px solid #667eea;
+            flex-wrap: wrap;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .contact-item i {
+            color: #667eea;
+            font-size: 18px;
+            width: 25px;
+            text-align: center;
+        }
+        
+        /* Resume Body */
+        .resume-body {
+            padding: 40px 50px;
+        }
+        
+        /* Two Column Layout */
+        .resume-columns {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+        
+        .resume-section {
+            margin-bottom: 28px;
+            position: relative;
+            padding-left: 22px;
+        }
+        .resume-section::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+        
+        .resume-section h3 {
+            color: #1e3c72;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .resume-section h3 i {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 18px;
+        }
+        .resume-section p {
+            color: #444;
+            font-size: 14px;
+            line-height: 1.75;
+            white-space: pre-line;
+        }
+        
+        /* Left Column Specific */
+        .left-column .resume-section h3 {
+            font-size: 18px;
+        }
+        .left-column .resume-section p {
+            font-size: 15px;
+            line-height: 1.8;
+        }
+        
+        /* Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f4f8 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            margin-bottom: 30px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        .summary-box h4 {
+            color: #1e3c72;
+            font-size: 15px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .summary-box p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .skill-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.2s;
+        }
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Sidebar Skills */
+        .sidebar-skills .skill-tag {
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            font-size: 13px;
+        }
+        
+        /* Certifications List */
+        .cert-list {
+            list-style: none;
+        }
+        .cert-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #444;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cert-list li:last-child {
+            border-bottom: none;
+        }
+        .cert-list li i {
+            color: #43e97b;
+            font-size: 14px;
+        }
+        
+        /* Languages */
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .language-item:last-child {
+            border-bottom: none;
+        }
+        .language-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        .language-level {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Action Buttons */
+        .action-bar {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px 50px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-top: 1px solid #e0e0e0;
+        }
+        .btn {
+            padding: 15px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        .btn-secondary {
+            background: white;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+        .btn-secondary:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+        
+        /* Footer Tips */
+        .tips-section {
+            background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
+            padding: 25px 50px;
+        }
+        .tips-section h4 {
+            color: #1e3c72;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tips-list {
+            list-style: none;
+        }
+        .tips-list li {
+            padding: 8px 0;
+            color: #555;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tips-list li i {
+            color: #43e97b;
+        }
+        
+        @media print {
+            body { background: white; }
+            .action-bar, .tips-section { display: none; }
+            .resume-container { box-shadow: none; }
+        }
+        
+        @media (max-width: 768px) {
+            .resume-header, .resume-body, .contact-bar, .action-bar, .tips-section {
+                padding: 25px 20px;
+            }
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .header-text h1 { font-size: 26px; }
+            .contact-bar { gap: 15px; }
+            .profile-photo { width: 110px; height: 110px; }
+            .resume-columns { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <div class="resume-header">
+            <div class="header-content">
+                {% if photo %}
+                <img src="/static/uploads/{{ photo }}" alt="Profile Photo" class="profile-photo">
+                {% else %}
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 24 24' fill='%23ccc'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile Photo" class="profile-photo">
+                {% endif %}
+                <div class="header-text">
+                    <h1>{{ resume.name }}</h1>
+                    {% if career_target %}
+                    <span class="career-target">🎯 {{ career_target }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        {% if resume %}
+        <div class="contact-bar">
+            {% if resume.email %}
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>{{ resume.email }}</span>
+            </div>
+            {% endif %}
+            {% if resume.phone %}
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>{{ resume.phone }}</span>
+            </div>
+            {% endif %}
+            {% if resume.location %}
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>{{ resume.location }}</span>
+            </div>
+            {% endif %}
+            {% if resume.linkedin %}
+            <div class="contact-item">
+                <i class="fab fa-linkedin"></i>
+                <span>{{ resume.linkedin }}</span>
+            </div>
+            {% endif %}
+            {% if resume.portfolio %}
+            <div class="contact-item">
+                <i class="fas fa-globe"></i>
+                <span>{{ resume.portfolio }}</span>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="resume-body">
+            <div class="resume-columns">
+                <!-- Left Column - Main Content -->
+                <div class="left-column">
+                    <!-- Professional Summary -->
+                    {% if resume.summary %}
+                    <div class="summary-box">
+                        <h4><i class="fas fa-user"></i> Professional Summary</h4>
+                        <p>{{ resume.summary }}</p>
+                    </div>
+                    {% else %}
+                    <div class="summary-box">
+                        <h4><i class="fas fa-user"></i> Professional Summary</h4>
+                        <p>Motivated and dedicated professional seeking to contribute to a progressive organization. Strong communication and analytical skills with a passion for continuous learning and growth. Committed to delivering excellence and adding value to the organization.</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if resume.education %}
+                    <div class="resume-section">
+                        <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                        <p>{{ resume.education }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if resume.internship %}
+                    <div class="resume-section">
+                        <h3><i class="fas fa-user-graduate"></i> Internship Experience</h3>
+                        <p>{{ resume.internship }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if resume.experience %}
+                    <div class="resume-section">
+                        <h3><i class="fas fa-briefcase"></i> Work Experience</h3>
+                        <p>{{ resume.experience }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if resume.projects %}
+                    <div class="resume-section">
+                        <h3><i class="fas fa-project-diagram"></i> Projects</h3>
+                        <p>{{ resume.projects }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Right Column - Sidebar -->
+                <div class="right-column">
+                    {% if resume.skills %}
+                    <div class="resume-section sidebar-skills">
+                        <h3><i class="fas fa-tools"></i> Skills</h3>
+                        <div class="skills-container">
+                            {% set skills_list = resume.skills.split(',') %}
+                            {% for skill in skills_list %}
+                            <span class="skill-tag">{{ skill.strip() }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if resume.certifications %}
+                    <div class="resume-section">
+                        <h3><i class="fas fa-certificate"></i> Certifications</h3>
+                        <ul class="cert-list">
+                            {% set certs = resume.certifications.split('\n') %}
+                            {% for cert in certs %}
+                            {% if cert.strip() %}
+                            <li><i class="fas fa-check-circle"></i> {{ cert.strip().replace('• ', '').replace('- ', '') }}</li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if resume.languages %}
+                    <div class="resume-section">
+                        <h3><i class="fas fa-language"></i> Languages</h3>
+                        <div class="language-item">
+                            <span class="language-name">English</span>
+                            <span class="language-level">Professional</span>
+                        </div>
+                        <div class="language-item">
+                            <span class="language-name">Hindi</span>
+                            <span class="language-level">Native</span>
+                        </div>
+                        {% if resume.languages %}
+                        <div class="language-item">
+                            <span class="language-name">Marathi</span>
+                            <span class="language-level">Native</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <div class="resume-section">
+                        <h3><i class="fas fa-language"></i> Languages</h3>
+                        <div class="language-item">
+                            <span class="language-name">English</span>
+                            <span class="language-level">Professional</span>
+                        </div>
+                        <div class="language-item">
+                            <span class="language-name">Hindi</span>
+                            <span class="language-level">Native</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if resume.hobbies %}
+                    <div class="resume-section">
+                        <h3><i class="fas fa-heart"></i> Interests</h3>
+                        <p>{{ resume.hobbies }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-bar">
+            <a href="/resume-builder" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Edit Resume
+            </a>
+            <button onclick="window.print()" class="btn btn-secondary">
+                <i class="fas fa-print"></i> Print / Save PDF
+            </button>
+        </div>
+        
+        <div class="tips-section">
+            <h4><i class="fas fa-lightbulb"></i> Tips for Interview Success</h4>
+            <ul class="tips-list">
+                <li><i class="fas fa-check"></i> Research about the company before the interview</li>
+                <li><i class="fas fa-check"></i> Practice common interview questions and answers</li>
+                <li><i class="fas fa-check"></i> Dress professionally and arrive 10 minutes early</li>
+                <li><i class="fas fa-check"></i> Prepare 3-5 questions to ask the interviewer</li>
+                <li><i class="fas fa-check"></i> Follow up with a thank you email within 24 hours</li>
+            </ul>
+        </div>
+        {% else %}
+        <div style="padding: 50px; text-align: center;">
+            <i class="fas fa-file-alt" style="font-size: 60px; color: #ddd; margin-bottom: 20px;"></i>
+            <h3 style="color: #666;">No resume found</h3>
+            <p style="color: #888; margin-bottom: 20px;">Create your professional resume now!</p>
+            <a href="/resume-builder" class="btn btn-primary">Create Resume</a>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/dashboard" style="color: white; text-decoration: none; font-weight: 600;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</body>
+</html>

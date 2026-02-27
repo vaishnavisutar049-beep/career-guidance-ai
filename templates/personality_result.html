@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality Result - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 { font-size: 26px; margin-bottom: 10px; }
+        .content { padding: 30px; }
+        .result-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .result-card h2 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        .result-card p { color: #555; font-size: 14px; line-height: 1.7; margin-bottom: 15px; }
+        .result-card strong { color: #333; }
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .btn:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Your Personality Type</h1>
+        </div>
+        <div class="content">
+            <div class="result-card">
+                <h2>{{ personality_type }}</h2>
+                <p><strong>💪 Strengths:</strong><br>{{ strengths }}</p>
+                <p><strong>⚠️ Weaknesses:</strong><br>{{ weaknesses }}</p>
+                <p><strong>🎯 Suitable Careers:</strong><br>{{ suitable_careers }}</p>
+            </div>
+            <div class="btn-group">
+                <a href="/career-suggestions" class="btn btn-primary">Get Career Suggestions</a>
+                <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

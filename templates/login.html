@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#667eea">
+<meta name="description" content="Career Guidance AI - Login">
+<link rel="manifest" href="/static/manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Login - Career Guidance AI</title>
+<style>
+.lang-selector {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 100;
+}
+
+.lang-selector select {
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 2px solid rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s;
+}
+
+.lang-selector select:hover {
+    background: rgba(255,255,255,0.3);
+    border-color: white;
+}
+
+.lang-selector select option {
+    background: #667eea;
+    color: white;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&h=1080&fit=crop') center center / cover;
+    opacity: 0.6;
+    z-index: 0;
+}
+.career-guide-title {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 48px;
+    font-weight: 800;
+    color: white;
+    text-shadow: 3px 3px 15px rgba(0,0,0,0.7);
+    letter-spacing: 3px;
+    z-index: 10;
+    width: 100%;
+    text-align: center;
+}
+.career-guide-title span {
+    color: #ffd700;
+}
+.container {
+    width: 100%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 10;
+}
+.logo { text-align: center; margin-bottom: 20px; }
+.logo img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #667eea; }
+h2 {
+    text-align: center;
+    color: #667eea;
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+p { text-align: center; color: #666; font-size: 14px; margin-bottom: 20px; }
+input {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+}
+input:focus { outline: none; border-color: #667eea; }
+button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: 15px;
+    cursor: pointer;
+}
+.links { text-align: center; margin-top: 20px; font-size: 14px; }
+.links a { color: #667eea; text-decoration: none; font-weight: 600; }
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    font-size: 14px;
+    background: #f8f8f8;
+}
+</style>
+</head>
+<body>
+<!-- Language Selector -->
+<div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+        <option value="{{ url_for('set_language', lang='en') }}" {% if current_lang == 'en' %}selected{% endif %}>English</option>
+        <option value="{{ url_for('set_language', lang='mr') }}" {% if current_lang == 'mr' %}selected{% endif %}>मराठी</option>
+        <option value="{{ url_for('set_language', lang='hi') }}" {% if current_lang == 'hi' %}selected{% endif %}>हिंदी</option>
+    </select>
+</div>
+<div class="career-guide-title">Career <span>Guide</span> 🚀</div>
+<div class="container" style="margin-top: 120px;">
+<div class="logo">
+<img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23667eea'/><text x='50' y='65' font-size='45' text-anchor='middle' fill='white'>🎯</text></svg>" alt="Career AI">
+</div>
+<h2>Welcome! 👋</h2>
+<p>Login to Career Guidance AI</p>
+
+<select>
+<option>🌐 English</option>
+<option>🌐 मराठी</option>
+<option>🌐 हिंदी</option>
+</select>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div style="padding:12px; margin-bottom:15px; background:#fee; color:#c00; border-radius:8px; text-align:center; font-size:14px;">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<form action="/login" method="POST">
+<input type="email" name="email" placeholder="📧 Email Address" required>
+<input type="password" name="password" placeholder="🔐 Password" required>
+<button type="submit">Login</button>
+</form>
+
+<div class="links">
+<p>No account? <a href="/register">Register</a></p>
+<p style="margin-top: 15px;"><a href="/parents-corner" style="color: #f5576c;">👨‍👩‍👧 Parents Corner</a></p>
+</div>
+</div>
+    
+    <!-- Floating Chatbot Button -->
+    <a href="/chat" class="floating-chatbot" title="Chat with AI Assistant">
+        🤖
+    </a>
+</body>
+</html>
