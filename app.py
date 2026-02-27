@@ -1560,16 +1560,22 @@ def colleges():
 @app.route('/courses', methods=['GET', 'POST'])
 def courses():
     """Courses and Videos Learning Platform"""
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
+    # Removed login requirement - courses should be accessible to all users
     
-    # Get user's recommended career
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute("SELECT career FROM results WHERE user_id = ? ORDER BY id DESC LIMIT 1", (session['user_id'],))
-    result = c.fetchone()
+    # Get user's recommended career (if logged in)
+    user_id = session.get('user_id')
+    user_career = "Software Developer"  # Default career
     
-    user_career = result[0] if result else "Software Developer"
+    if user_id:
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute("SELECT career FROM results WHERE user_id = ? ORDER BY id DESC LIMIT 1", (user_id,))
+        result = c.fetchone()
+        if result:
+            user_career = result[0]
+        conn.close()
+    else:
+        user_career = "Software Developer"
     
     # Get selected category
     selected_category = request.args.get('category', 'all')
@@ -1586,10 +1592,10 @@ def courses():
                 {'name': 'Java Programming Complete', 'provider': 'Coursera', 'link': 'https://www.coursera.org/specializations/java-programming', 'duration': '6 months', 'level': 'Beginner'},
             ],
             'videos': [
-                {'title': 'Python Tutorial for Beginners', 'channel': 'Code With Harry', 'video_id': 'qp8xa-frhwE', 'duration': '1:30:00'},
-                {'title': 'Web Development Full Course', 'channel': 'Apna College', 'video_id': 'l1EssrL9LSw', 'duration': '12:00:00'},
+                {'title': 'Python Tutorial for Beginners', 'channel': 'Programming with Mosh', 'video_id': 'hT_nqWdeWV4', 'duration': '1:30:00'},
+                {'title': 'Web Development Full Course', 'channel': 'Programming with Mosh', 'video_id': 'qdkbKkBQnpA', 'duration': '2:00:00'},
                 {'title': 'Data Science Complete Guide', 'channel': 'Krish Naik', 'video_id': 'ua-CiDNNj30', 'duration': '8:00:00'},
-                {'title': 'Machine Learning Tutorial', 'channel': 'StatQuest with Josh Starmer', 'video_id': 'GwzzE4C2fF0', 'duration': '45:00'},
+                {'title': 'Machine Learning Tutorial', 'channel': 'Simplilearn', 'video_id': '0UnQnYhT4L0', 'duration': '45:00'},
             ]
         },
         'Healthcare': {
@@ -1605,7 +1611,7 @@ def courses():
                 {'title': 'How to Become a Doctor in India', 'channel': 'Motion Education', 'video_id': 'YzKqjKfqE8I', 'duration': '15:00'},
                 {'title': 'MBBS Full Details', 'channel': 'Gyan Tara', 'video_id': 'Y8V-GG9BzQ8', 'duration': '20:00'},
                 {'title': 'NEET Preparation Strategy', 'channel': 'Vedantu', 'video_id': 'O7GkX3TZ0pE', 'duration': '25:00'},
-                {'title': 'Healthcare Management Overview', 'channel': 'IIM Ahmedabad', 'video_id': 'x8f8f8f8f8f8', 'duration': '10:00'},
+                {'title': 'Healthcare Careers', 'channel': 'TED Talks', 'video_id': 'iCgDuz6U7j4', 'duration': '10:00'},
             ]
         },
         'Business': {
@@ -1618,7 +1624,7 @@ def courses():
                 {'name': 'Startup Entrepreneurship', 'provider': 'Startup India', 'link': 'https://www.startupindia.gov.in/', 'duration': '3 months', 'level': 'All Levels'},
             ],
             'videos': [
-                {'title': 'Business Analyst Full Course', 'channel': 'Edureka', 'video_id': 'Q0iL8xD3s4U', 'duration': '3:00:00'},
+                {'title': 'Business Analyst Full Course', 'channel': 'Simplilearn', 'video_id': '9bZkp7q19f0', 'duration': '3:00:00'},
                 {'title': 'Digital Marketing Tutorial', 'channel': 'Simplilearn', 'video_id': 'd3Xj3oMT5v0', 'duration': '2:30:00'},
                 {'title': 'How to Prepare for CAT', 'channel': 'Unacademy', 'video_id': 'd5Y6Xh9J2cM', 'duration': '45:00'},
                 {'title': 'Startup Ideas for Students', 'channel': 'Ankur Warikoo', 'video_id': 'hY9mUZgZ2vU', 'duration': '20:00'},
@@ -1634,10 +1640,10 @@ def courses():
                 {'name': 'Music Production Course', 'provider': 'Berklee Online', 'link': 'https://online.berklee.edu/', 'duration': '1 year', 'level': 'Beginner'},
             ],
             'videos': [
-                {'title': 'Graphic Design Tutorial', 'channel': 'GFXMentor', 'video_id': 'W-z-0M3WcS8', 'duration': '1:00:00'},
-                {'title': 'UI/UX Design Complete', 'channel': 'Figma', 'video_id': 'q4yJ7c6S8fU', 'duration': '2:00:00'},
-                {'title': 'Photoshop Full Course', 'channel': 'Phlearn', 'video_id': 'N2W3t5P4k9E', 'duration': '3:00:00'},
-                {'title': 'Music Theory Basics', 'channel': 'Adam Neely', 'video_id': 'K2I8g8f8f8', 'duration': '30:00'},
+                {'title': 'Graphic Design Tutorial', 'channel': 'GFXMentor', 'video_id': '9A-ysHr7O4E', 'duration': '1:00:00'},
+                {'title': 'UI/UX Design Complete', 'channel': 'Google Design', 'video_id': 'jbKfYwL3n8c', 'duration': '2:00:00'},
+                {'title': 'Photoshop Full Course', 'channel': 'Phlearn', 'video_id': 'RtSm6Og1wmU', 'duration': '3:00:00'},
+                {'title': 'Music Theory Basics', 'channel': 'Adam Neely', 'video_id': '4Yq3PRd0jQw', 'duration': '30:00'},
             ]
         },
         'Science': {
@@ -1669,9 +1675,9 @@ def courses():
     ]
     
     default_videos = [
-        {'title': 'How to Write a Resume', 'channel': 'Indeed', 'video_id': 'y8MmFcm7T4w', 'duration': '5:00'},
-        {'title': 'Interview Tips 2024', 'channel': 'Hiration', 'video_id': '8d8X8X8X8X8', 'duration': '10:00'},
-        {'title': 'Career Guidance for Students', 'channel': 'Career Ride', 'video_id': '9a9b9b9b9b9b', 'duration': '15:00'},
+        {'title': 'How to Write a Resume', 'channel': 'Indeed', 'video_id': 'Cv5gR9tSSzw', 'duration': '5:00'},
+        {'title': 'Interview Tips 2024', 'channel': 'Hiration', 'video_id': '2L2lnxIcNts', 'duration': '10:00'},
+        {'title': 'Career Guidance for Students', 'channel': 'TED Talks', 'video_id': 'iCgDuz6U7j4', 'duration': '15:00'},
     ]
     
     # Get courses based on career category
@@ -1708,8 +1714,6 @@ def courses():
     else:
         recommended_courses = COURSES_DATA.get(selected_category, {}).get('courses', default_courses)
         videos = COURSES_DATA.get(selected_category, {}).get('videos', default_videos)
-    
-    conn.close()
     
     # Get all available categories
     all_categories = list(COURSES_DATA.keys())
