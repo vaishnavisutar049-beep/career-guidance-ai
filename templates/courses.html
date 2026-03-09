@@ -343,7 +343,70 @@
             .courses-grid, .videos-grid {
                 grid-template-columns: 1fr;
             }
-            .header h1 { font-size: 22px; }
+            .header {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 20px;
+            }
+            .header p {
+                font-size: 14px;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .tab {
+                padding: 12px;
+                font-size: 14px;
+            }
+            .category-filter {
+                padding: 15px 10px;
+                gap: 8px;
+            }
+            .filter-btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+            .content {
+                padding: 15px;
+            }
+            .section-title {
+                font-size: 18px;
+            }
+            .course-card {
+                margin-bottom: 15px;
+            }
+            .course-header {
+                padding: 12px;
+            }
+            .course-header h3 {
+                font-size: 14px;
+            }
+            .course-body {
+                padding: 12px;
+            }
+            .course-info {
+                font-size: 12px;
+            }
+            .back-link {
+                display: block;
+                text-align: center;
+                margin: 10px 0;
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 15px;
+            }
+            .floating-chatbot {
+                width: 55px;
+                height: 55px;
+                font-size: 24px;
+                bottom: 15px;
+                right: 15px;
+            }
         }
         
         /* Floating Chatbot Button - Shows on both Mobile and Desktop */

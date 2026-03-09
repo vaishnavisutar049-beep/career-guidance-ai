@@ -160,6 +160,63 @@
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 25px 20px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .header p {
+                font-size: 14px;
+            }
+            .content {
+                padding: 20px 15px;
+            }
+            .category-title {
+                font-size: 18px;
+            }
+            .careers-grid {
+                grid-template-columns: 1fr;
+            }
+            .career-card {
+                padding: 15px;
+            }
+            .career-card h3 {
+                font-size: 16px;
+            }
+            .career-info {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .salary-tag, .stability-tag, .risk-tag {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+            .back-link {
+                display: block;
+                text-align: center;
+                margin: 10px 0;
+                padding: 10px;
+            }
+            .floating-chatbot {
+                width: 55px;
+                height: 55px;
+                font-size: 24px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 15px;
+            }
+            .header h1 {
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 <body>

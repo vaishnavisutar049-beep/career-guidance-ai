@@ -219,10 +219,107 @@
         }
         
         @media (max-width: 768px) {
-            .header h1 { font-size: 28px; }
-            .content { padding: 20px; }
-            .stream-card { padding: 20px; }
-            .courses-table { display: block; overflow-x: auto; }
+            .header {
+                padding: 25px 20px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .header p {
+                font-size: 14px;
+            }
+            .header .badge {
+                font-size: 12px;
+            }
+            .content {
+                padding: 20px 15px;
+            }
+            .intro-section h2 {
+                font-size: 20px;
+            }
+            .intro-section p {
+                font-size: 14px;
+            }
+            .stream-card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            .stream-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .stream-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            .stream-title {
+                font-size: 18px;
+            }
+            .stream-description {
+                font-size: 13px;
+            }
+            .courses-table {
+                display: block;
+                overflow-x: auto;
+                font-size: 12px;
+            }
+            .courses-table th,
+            .courses-table td {
+                padding: 10px 8px;
+                font-size: 11px;
+            }
+            .nav-buttons {
+                gap: 8px;
+                padding: 15px 10px;
+            }
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 11px;
+                flex: 1 1 auto;
+                justify-content: center;
+            }
+            .nav-btn i {
+                display: none;
+            }
+            .tips-section {
+                padding: 20px 15px;
+            }
+            .tips-section h3 {
+                font-size: 18px;
+            }
+            .tip-item {
+                padding: 10px;
+            }
+            .tip-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+            .tip-text {
+                font-size: 13px;
+            }
+            .footer {
+                padding: 20px 15px;
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 15px;
+            }
+            .header h1 {
+                font-size: 18px;
+            }
+            .nav-btn {
+                font-size: 10px;
+                padding: 8px 6px;
+            }
+            .stream-title span {
+                display: none;
+            }
         }
     </style>
 </head>

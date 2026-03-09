@@ -757,6 +757,20 @@
             .ai-recommendations {
                 grid-template-columns: 1fr;
             }
+            
+            .header-right {
+                flex-wrap: wrap;
+            }
+            
+            .lang-selector {
+                order: -1;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .lang-selector select {
+                width: 100%;
+            }
         }
 
         @media (max-width: 768px) {
@@ -766,21 +780,152 @@
             
             .top-header {
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
                 align-items: flex-start;
+            }
+            
+            .header-left h1 {
+                font-size: 24px;
+            }
+            
+            .header-left p {
+                font-size: 14px;
+            }
+            
+            .search-box {
+                width: 100%;
             }
             
             .search-box input {
                 width: 100%;
+                font-size: 14px;
             }
             
             .header-right {
                 width: 100%;
-                justify-content: space-between;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .user-profile {
+                justify-content: center;
             }
             
             .courses-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .course-card {
+                padding: 15px;
+            }
+            
+            .course-thumbnail img {
+                height: 150px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .video-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .video-controls button {
+                width: 100%;
+            }
+            
+            .video-info {
+                padding: 15px;
+            }
+            
+            .video-info h3 {
+                font-size: 16px;
+            }
+            
+            .video-popup {
+                padding: 10px;
+            }
+            
+            .video-container {
+                width: 100%;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonial-card {
+                padding: 15px;
+            }
+            
+            .videoRecommendations {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sidebar-logo h2 {
+                font-size: 16px;
+            }
+            
+            .sidebar-nav a {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+            
+            .sidebar-nav i {
+                width: 20px;
+            }
+            
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 28px;
+            }
+            
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .ai-recommendation {
+                padding: 15px;
+            }
+            
+            .ai-recommendation h4 {
+                font-size: 14px;
+            }
+            
+            .match-score {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+            
+            .videoInterest {
+                font-size: 14px;
+                padding: 10px;
+            }
+            
+            button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .testimonial-author {
+                font-size: 14px;
+            }
+            
+            .videoInterest {
+                width: 100%;
+            }
+            
+            .getVideoBtn {
+                width: 100%;
             }
         }
 
