@@ -3,887 +3,1605 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#667eea">
-    <meta name="description" content="Career Guidance AI - Advanced Features">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="description" content="Career Guidance AI - Dashboard">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Dashboard - Career Guidance AI</title>
     <style>
-        /* Language Selector Styles */
-        .lang-selector {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            z-index: 100;
-        }
-        
-        .lang-selector select {
-            padding: 8px 12px;
-            border-radius: 20px;
-            border: 2px solid rgba(255,255,255,0.5);
-            background: rgba(255,255,255,0.2);
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s;
-        }
-        
-        .lang-selector select:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: white;
-        }
-        
-        .lang-selector select option {
-            background: #667eea;
-            color: white;
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         :root {
             --primary: #667eea;
             --secondary: #764ba2;
             --accent: #f093fb;
             --success: #43e97b;
             --warning: #fa709a;
-            --info: #4facfe;
-            --dark: #2d3748;
-            --light: #f7fafc;
+            --danger: #ff6b6b;
+            --dark: #1a1a2e;
+            --darker: #0f0f1a;
+            --light: #e8e8e8;
+            --card-bg: #16213e;
+            --card-hover: #1f3460;
+            --sidebar-width: 260px;
+            --header-height: 70px;
         }
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
-            padding: 15px;
+            color: var(--light);
+            overflow-x: hidden;
         }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            padding: 35px 25px;
-            text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            animation: shimmer 3s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .header img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: float 3s ease-in-out infinite;
-            position: relative;
-            z-index: 1;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .header h1 { 
-            font-size: 28px; 
-            margin-top: 15px; 
-            font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .header p { 
-            font-size: 14px; 
-            opacity: 0.95; 
-            margin-top: 8px;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .welcome {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 25px 20px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .welcome::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
             left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #f093fb, #43e97b);
+            top: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            padding: 20px;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            overflow-y: auto;
         }
-        
-        .welcome h2 { 
-            color: #667eea; 
-            font-size: 22px; 
-            font-weight: 700;
-            animation: slideIn 0.5s ease-out;
-        }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .welcome p {
-            color: #666;
-            margin-top: 8px;
-            font-size: 14px;
-        }
-        
-        .welcome .stats {
+
+        .sidebar-logo {
             display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 18px;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 10px;
+            margin-bottom: 30px;
         }
-        
-        .welcome .stat-box {
-            background: white;
-            padding: 15px 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            min-width: 100px;
+
+        .sidebar-logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            object-fit: cover;
         }
-        
-        .welcome .stat-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        
-        .welcome .stat-box span { 
-            font-size: 28px; 
-            font-weight: 800; 
-            background: linear-gradient(135deg, #667eea, #764ba2);
+
+        .sidebar-logo h2 {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
-        .welcome .stat-box small { 
-            display: block; 
-            font-size: 12px; 
-            color: #888;
-            margin-top: 5px;
-            font-weight: 600;
+
+        .sidebar-nav {
+            list-style: none;
         }
-        
-        .section-title {
-            padding: 18px 20px 12px;
-            font-size: 17px;
-            font-weight: 700;
-            color: #2d3748;
-            background: #fff;
-            border-bottom: 2px solid #f0f0f0;
+
+        .sidebar-nav li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-nav a {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            padding: 12px 15px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
         }
-        
-        .section-title i {
-            color: #667eea;
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
+            color: white;
+            border-left: 3px solid var(--primary);
         }
-        
-        .menu {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-        
-        .menu-item {
-            background: white;
-            border-radius: 20px;
-            padding: 20px 10px;
+
+        .sidebar-nav a i {
+            width: 20px;
             text-align: center;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 16px;
+        }
+
+        .sidebar-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .sidebar-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            padding: 0 15px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 30px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header-left h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .header-left p {
+            color: rgba(255,255,255,0.6);
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 12px 20px 12px 45px;
+            color: white;
+            width: 280px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.4);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        .user-profile span {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        /* Language Selector */
+        .lang-selector {
+            position: relative;
+            margin-right: 10px;
+        }
+        
+        .lang-selector select {
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .lang-selector select:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .lang-selector select option {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--card-bg), var(--card-hover));
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 2px solid transparent;
         }
-        
-        .menu-item::before {
+
+        .stat-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transform: scaleX(0);
-            transition: transform 0.3s;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
         }
-        
-        .menu-item:hover { 
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.25);
-            border-color: #667eea;
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
-        
-        .menu-item:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .menu-item:nth-child(1) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .menu-item:nth-child(2) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .menu-item:nth-child(3) { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .menu-item:nth-child(4) { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-        .menu-item:nth-child(5) { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
-        .menu-item:nth-child(6) { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
-        .menu-item:nth-child(7) { background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); }
-        .menu-item:nth-child(8) { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
-        .menu-item:nth-child(9) { background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%); }
-        
-        .menu-item.new-feature {
-            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
-            50% { box-shadow: 0 0 0 15px rgba(255, 107, 107, 0); }
-        }
-        
-        .menu-item a {
-            color: white;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
-            display: block;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .menu-item .icon { 
-            font-size: 36px; 
-            margin-bottom: 8px; 
-            display: block;
-            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
-        }
-        
-        .menu-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 0 20px 20px;
-        }
-        
-        .menu-row .menu-item {
-            padding: 22px 15px;
-        }
-        
-        .menu-row .menu-item a { 
-            font-size: 13px; 
-        }
-        
-        .credits {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 25px 20px;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-        
-        /* Mobile Responsive Styles */
-        @media (max-width: 480px) {
-            body {
-                padding: 5px;
-            }
-            
-            .container {
-                border-radius: 15px;
-                max-width: 100%;
-            }
-            
-            .header {
-                padding: 20px 15px;
-            }
-            
-            .header img {
-                width: 70px;
-                height: 70px;
-                border: 3px solid white;
-            }
-            
-            .header h1 {
-                font-size: 1.1rem;
-                margin-top: 10px;
-            }
-            
-            .header p {
-                font-size: 12px;
-            }
-            
-            .welcome {
-                padding: 15px;
-            }
-            
-            .welcome h2 {
-                font-size: 16px;
-            }
-            
-            .welcome p {
-                font-size: 11px;
-            }
-            
-            .welcome .stats {
-                gap: 10px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .welcome .stat-box {
-                padding: 10px 15px;
-                min-width: 70px;
-            }
-            
-            .welcome .stat-box span {
-                font-size: 20px;
-            }
-            
-            .welcome .stat-box small {
-                font-size: 10px;
-            }
-            
-            .section-title {
-                padding: 12px 15px 10px;
-                font-size: 14px;
-            }
-            
-            .menu {
-                padding: 10px;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-            
-            .menu-item {
-                padding: 12px 6px;
-                border-radius: 12px;
-            }
-            
-            .menu-item .icon {
-                font-size: 24px;
-                margin-bottom: 4px;
-            }
-            
-            .menu-item a {
-                font-size: 9px;
-                line-height: 1.2;
-            }
-            
-            .menu-row {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-                padding: 0 10px 10px;
-            }
-            
-            .menu-row .menu-item {
-                padding: 12px 8px;
-            }
-            
-            .menu-row .menu-item a {
-                font-size: 9px;
-            }
-            
-            .menu-row .menu-item .icon {
-                font-size: 22px;
-            }
-            
-            .quick-access {
-                padding: 0 10px 10px;
-            }
-            
-            .quick-card {
-                min-width: 60px;
-                padding: 8px 5px;
-            }
-            
-            .quick-card i {
-                font-size: 18px;
-            }
-            
-            .quick-card span {
-                font-size: 8px;
-            }
-            
-            .lang-selector {
-                top: 8px;
-                right: 8px;
-            }
-            
-            .lang-selector select {
-                padding: 4px 6px;
-                font-size: 9px;
-            }
-            
-            .credits {
-                padding: 15px;
-            }
-            
-            .credits h3 {
-                font-size: 14px;
-                margin-bottom: 10px;
-            }
-            
-            .credits p {
-                font-size: 11px;
-                margin: 5px 0;
-            }
-            
-            .footer {
-                padding: 15px;
-            }
-            
-            .footer a {
-                padding: 10px 25px;
-                font-size: 13px;
-            }
-            
-            .admin-link {
-                padding: 10px;
-                font-size: 11px;
-            }
-            
-            .badge {
-                font-size: 7px;
-                padding: 2px 5px;
-            }
-        }
-        
-        /* Floating Chatbot Button - Shows on both Mobile and Desktop */
-        .floating-chatbot {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-size: 32px;
-            box-shadow: 0 5px 25px rgba(102, 126, 234, 0.6);
-            z-index: 1000;
-            cursor: pointer;
-            animation: floatPulse 2s infinite;
-            border: none;
-            text-decoration: none;
+
+        .stat-card .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 22px;
+            margin-bottom: 15px;
         }
-        
-        @keyframes floatPulse {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+
+        .stat-card:nth-child(1) .stat-icon { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .stat-card:nth-child(2) .stat-icon { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .stat-card:nth-child(3) .stat-icon { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .stat-card:nth-child(4) .stat-icon { background: linear-gradient(135deg, #fa709a, #fee140); }
+
+        .stat-card h3 {
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 5px;
         }
-        
-        @media (min-width: 481px) and (max-width: 768px) {
-            .menu {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-                padding: 12px;
-            }
-            
-            .menu-item .icon {
-                font-size: 28px;
-            }
-            
-            .menu-item a {
-                font-size: 10px;
-            }
-            
-            .header img {
-                width: 85px;
-                height: 85px;
-            }
-            
-            .header h1 {
-                font-size: 1.4rem;
-            }
+
+        .stat-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            font-weight: 500;
         }
-        
-        .credits::before {
+
+        .stat-card .trend {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .stat-card .trend.up {
+            background: rgba(67, 233, 123, 0.2);
+            color: #43e97b;
+        }
+
+        /* Section Titles */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .section-header a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .section-header a:hover {
+            color: var(--accent);
+        }
+
+        /* Course Cards */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border-color: rgba(102,126,234,0.3);
+        }
+
+        .course-thumbnail {
+            position: relative;
+            height: 160px;
+            overflow: hidden;
+        }
+
+        .course-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover .course-thumbnail img {
+            transform: scale(1.1);
+        }
+
+        .course-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: var(--dark);
+            font-size: 20px;
+        }
+
+        .course-card:hover .course-play-btn {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--danger);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .course-badge.new { background: var(--success); }
+        .course-badge.hot { background: var(--warning); }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .course-category {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .course-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .course-meta i {
+            color: var(--primary);
+        }
+
+        .course-progress {
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .course-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .course-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .course-rating i {
+            color: #ffd700;
+            font-size: 12px;
+        }
+
+        .course-rating span {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* AI Recommendation Panel */
+        .ai-panel {
+            background: linear-gradient(135deg, #1e1e3f, #2d2d5a);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(102,126,234,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-panel::before {
             content: '';
             position: absolute;
             top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102,126,234,0.15) 0%, transparent 70%);
+            pointer-events: none;
         }
-        
-        .credits h3 { 
-            font-size: 18px; 
-            margin-bottom: 15px;
-            position: relative;
-        }
-        
-        .credits p { 
-            font-size: 13px; 
-            margin: 8px 0;
-            position: relative;
-            font-weight: 500;
-        }
-        
-        .footer { 
-            padding: 20px; 
-            text-align: center; 
-            background: #f5f5f5;
-        }
-        
-        .footer a {
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 15px;
-            padding: 14px 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 30px;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s;
-        }
-        
-        .footer a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
-        }
-        
-        .badge {
-            background: #ff6b6b;
-            color: white;
-            font-size: 9px;
-            padding: 3px 7px;
-            border-radius: 10px;
-            margin-left: 5px;
-            font-weight: 700;
-            animation: bounce 1s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-        
-        .admin-link {
-            display: block;
-            text-align: center;
-            padding: 12px;
-            color: #667eea;
-            font-size: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        
-        .admin-link:hover {
-            color: #764ba2;
-        }
-        
-        /* Quick Access Cards */
-        .quick-access {
+
+        .ai-header {
             display: flex;
-            gap: 10px;
-            padding: 0 20px 15px;
-            overflow-x: auto;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
         }
-        
-        .quick-card {
-            min-width: 80px;
-            padding: 12px;
-            border-radius: 15px;
-            text-align: center;
-            background: white;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .quick-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-        }
-        
-        .quick-card i {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        
-        .quick-card span {
-            font-size: 10px;
-            font-weight: 600;
-            color: #666;
-        }
-        
-        /* Progress Ring */
-        .progress-ring {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+
+        .ai-icon {
             width: 50px;
             height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            animation: pulse-ai 2s infinite;
         }
-        
-        .progress-ring circle {
-            fill: transparent;
-            stroke-width: 4;
+
+        @keyframes pulse-ai {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(102,126,234,0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(102,126,234,0); }
         }
-        
-        .progress-ring .bg {
-            stroke: rgba(255,255,255,0.3);
+
+        .ai-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
         }
-        
-        .progress-ring .progress {
-            stroke: white;
-            stroke-linecap: round;
-            transform: rotate(-90deg);
-            transform-origin: center;
-            transition: stroke-dashoffset 1s;
+
+        .ai-header p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
         }
-        
-        /* Floating Particles */
-        .particles {
+
+        .ai-recommendations {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .ai-recommendation {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .ai-recommendation:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .ai-recommendation h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-recommendation h4 i {
+            color: var(--success);
+        }
+
+        .ai-recommendation p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+        }
+
+        .ai-recommendation .match-score {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--success), #38f9d7);
+            color: var(--dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        /* Video Popup Player */
+        .video-popup {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-popup.active {
+            display: flex;
+        }
+
+        .video-container {
+            width: 90%;
+            max-width: 900px;
+            background: var(--dark);
+            border-radius: 20px;
             overflow: hidden;
-            z-index: -1;
+            position: relative;
+            animation: videoOpen 0.3s ease;
         }
-        
-        .particle {
+
+        @keyframes videoOpen {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .video-close {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: rgba(255,255,255,0.3);
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border: none;
             border-radius: 50%;
-            animation: particleFloat 10s infinite;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
         }
-        
-        @keyframes particleFloat {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+
+        .video-close:hover {
+            background: var(--danger);
+            transform: rotate(90deg);
+        }
+
+        .video-player {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-info h3 {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .video-info p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+
+        .video-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .video-controls button {
+            background: var(--primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-controls button:hover {
+            background: var(--accent);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .ai-recommendations {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 80px 20px 20px;
+            }
+            
+            .mobile-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .ai-recommendations {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .top-header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Floating Chatbot Button */
+        .floating-chatbot {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .floating-chatbot:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 15px 40px rgba(102,126,234,0.5);
+        }
+
+        .floating-chatbot::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            z-index: -1;
+            animation: floatBot 2s infinite;
+        }
+
+        @keyframes floatBot {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="particles">
-        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
-        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
-        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
-        <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
-        <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
-        <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
-        <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
-        <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
-        <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
+    <!-- Mobile Toggle -->
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <img src="https://ui-avatars.com/api/?name=Career+AI&background=667eea&color=fff&size=128" alt="Logo">
+            <h2>Career AI</h2>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li><a href="/dashboard" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="/courses"><i class="fas fa-book-open"></i> Courses</a></li>
+            <li><a href="/videos"><i class="fas fa-play-circle"></i> Videos</a></li>
+            <li><a href="/browse-careers"><i class="fas fa-briefcase"></i> Careers</a></li>
+            <li><a href="/chat"><i class="fas fa-robot"></i> AI Chat</a></li>
+        </ul>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Tools</div>
+            <ul class="sidebar-nav">
+                <li><a href="/resume-builder"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+                <li><a href="/interview"><i class="fas fa-user-tie"></i> Interview Prep</a></li>
+                <li><a href="/personality-test"><i class="fas fa-brain"></i> Personality</a></li>
+                <li><a href="/aptitude-test"><i class="fas fa-chart-line"></i> Aptitude</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Progress</div>
+            <ul class="sidebar-nav">
+                <li><a href="/progress"><i class="fas fa-trophy"></i> My Progress</a></li>
+                <li><a href="/certificates"><i class="fas fa-certificate"></i> Certificates</a></li>
+                <li><a href="/salary-predict"><i class="fas fa-coins"></i> Salary Predict</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <ul class="sidebar-nav">
+                <li><a href="/career-suggestions"><i class="fas fa-compass"></i> Career Suggestions</a></li>
+                <li><a href="/after-10th"><i class="fas fa-school"></i> After 10th</a></li>
+                <li><a href="/after-12th"><i class="fas fa-graduation-cap"></i> After 12th</a></li>
+                <li><a href="/feedback"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <ul class="sidebar-nav">
+                <li><a href="/admin-login"><i class="fas fa-shield-alt"></i> Admin Panel</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Header -->
+        <header class="top-header">
+            <div class="header-left">
+                <h1>{{ t['welcome_message'] }} 👋</h1>
+                <p>{{ t['continue_learning'] if t.get('continue_learning') else "Let's continue your learning journey" }}</p>
+            </div>
+            <div class="header-right">
+                <div class="lang-selector">
+                    <select onchange="window.location.href=this.value">
+                        <option value="{{ url_for('set_language', lang='en') }}" {% if session.get('lang') == 'en' or not session.get('lang') %}selected{% endif %}>English</option>
+                        <option value="{{ url_for('set_language', lang='mr') }}" {% if session.get('lang') == 'mr' %}selected{% endif %}>मराठी</option>
+                        <option value="{{ url_for('set_language', lang='hi') }}" {% if session.get('lang') == 'hi' %}selected{% endif %}>हिंदी</option>
+                    </select>
+                </div>
+                <div class="search-box" onclick="activateSearch()">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="headerSearch" placeholder="{{ t['search_courses'] if t.get('search_courses') else 'Search courses, careers...' }}" onkeypress="handleSearch(event)">
+                </div>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name={{name}}&background=667eea&color=fff" alt="Profile">
+                    <span>{{name}}</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-book"></i></div>
+                <h3>12</h3>
+                <p>Courses Enrolled</p>
+                <span class="trend up"><i class="fas fa-arrow-up"></i> +3 this month</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <h3>48h</h3>
+                <p>Learning Hours</p>
+                <span class="trend up"><i class="fas fa-arrow-up"></i> +12h this week</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <h3>8</h3>
+                <p>Certificates Earned</p>
+                <span class="trend up"><i class="fas fa-arrow-up"></i> +2 this month</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                <h3>15</h3>
+                <p>Day Streak 🔥</p>
+                <span class="trend up"><i class="fas fa-arrow-up"></i> Keep it up!</span>
+            </div>
+        </div>
+
+        <!-- AI Recommendation Panel -->
+        <div class="ai-panel">
+            <div class="ai-header">
+                <div class="ai-icon"><i class="fas fa-robot"></i></div>
+                <div>
+                    <h3>AI Powered Recommendations</h3>
+                    <p>Based on your interests & skills</p>
+                </div>
+            </div>
+            <div class="ai-recommendations">
+                <div class="ai-recommendation" onclick="openVideo('Introduction to Machine Learning', 'https://www.youtube.com/embed/yXJHrN0fR2I')">
+                    <h4><i class="fas fa-robot"></i> Machine Learning</h4>
+                    <p>Based on your interest in data science, we recommend starting with ML fundamentals</p>
+                    <span class="match-score">98% Match</span>
+                </div>
+                <div class="ai-recommendation" onclick="openVideo('Python for Data Science', 'https://www.youtube.com/embed/_uQrJ0TkZlc')">
+                    <h4><i class="fas fa-code"></i> Python Fundamentals</h4>
+                    <p>Strengthen your Python skills before diving into advanced ML concepts</p>
+                    <span class="match-score">95% Match</span>
+                </div>
+                <div class="ai-recommendation" onclick="openVideo('Career in Data Science', 'https://www.youtube.com/embed/ua-CiDNNj30')">
+                    <h4><i class="fas fa-briefcase"></i> Career Path</h4>
+                    <p>Discover career opportunities in Data Science and AI</p>
+                    <span class="match-score">92% Match</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Courses -->
+        <div class="section-header">
+            <h2>Featured Courses</h2>
+            <a href="/courses">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="courses-grid">
+            <div class="course-card" onclick="openVideo('Complete Web Development', 'https://www.youtube.com/embed/nu_pCVPkz5M')">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400" alt="Web Development">
+                    <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                    <span class="course-badge hot">Hot</span>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Development</div>
+                    <h3 class="course-title">Complete Web Development Bootcamp 2024</h3>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>4.8 (2.5k students)</span>
+                    </div>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 42 hours</span>
+                        <span><i class="fas fa-video"></i> 120 lessons</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="course-progress-bar" style="width: 65%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="openVideo('Data Science with Python', 'https://www.youtube.com/embed/ua-CiDNNj30')">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400" alt="Data Science">
+                    <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                    <span class="course-badge new">New</span>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Data Science</div>
+                    <h3 class="course-title">Data Science & Machine Learning with Python</h3>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>4.9 (1.8k students)</span>
+                    </div>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 36 hours</span>
+                        <span><i class="fas fa-video"></i> 95 lessons</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="course-progress-bar" style="width: 30%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="openVideo('UI/UX Design Masterclass', 'https://www.youtube.com/embed/c9Wg6Cb_YlU')">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400" alt="UI/UX Design">
+                    <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Design</div>
+                    <h3 class="course-title">UI/UX Design Masterclass - Figma to Pro</h3>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>4.7 (3.2k students)</span>
+                    </div>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 28 hours</span>
+                        <span><i class="fas fa-video"></i> 80 lessons</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="course-progress-bar" style="width: 80%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="openVideo('Mobile App Development', 'https://www.youtube.com/embed/tbTmW31WtEQ')">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400" alt="Mobile Development">
+                    <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                    <span class="course-badge">Popular</span>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Mobile</div>
+                    <h3 class="course-title">Flutter & Dart - Complete Mobile App Dev</h3>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>4.6 (1.5k students)</span>
+                    </div>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 45 hours</span>
+                        <span><i class="fas fa-video"></i> 110 lessons</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="course-progress-bar" style="width: 15%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- More Courses -->
+        <div class="section-header">
+            <h2>Continue Learning</h2>
+            <a href="/courses">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="courses-grid">
+            <div class="course-card" onclick="openVideo('AWS Cloud Practitioner', 'https://www.youtube.com/embed/SOTamWNgDKc')">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400" alt="AWS Cloud">
+                    <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Cloud Computing</div>
+                    <h3 class="course-title">AWS Cloud Practitioner Certification</h3>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>4.8 (900 students)</span>
+                    </div>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 20 hours</span>
+                        <span><i class="fas fa-video"></i> 50 lessons</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="course-progress-bar" style="width: 45%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="openVideo('Artificial Intelligence', 'https://www.youtube.com/embed/GwGTw75y1-8')">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400" alt="AI">
+                    <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                    <span class="course-badge new">New</span>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">AI & ML</div>
+                    <h3 class="course-title">Artificial Intelligence A-Z Course</h3>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>4.9 (2.1k students)</span>
+                    </div>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 40 hours</span>
+                        <span><i class="fas fa-video"></i> 100 lessons</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="course-progress-bar" style="width: 10%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="openVideo('Cybersecurity Fundamentals', 'https://www.youtube.com/embed/yr3PilqMnkw')">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400" alt="Cybersecurity">
+                    <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Security</div>
+                    <h3 class="course-title">Cybersecurity Fundamentals - Beginner</h3>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>4.7 (1.2k students)</span>
+                    </div>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 25 hours</span>
+                        <span><i class="fas fa-video"></i> 65 lessons</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="course-progress-bar" style="width: 55%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Career Recommendations Section -->
+        <div class="section-header">
+            <h2>Recommended for You</h2>
+            <a href="/career-suggestions">Get Personalized <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="ai-panel" style="margin-bottom: 40px;">
+            <div class="ai-header">
+                <div class="ai-icon"><i class="fas fa-compass"></i></div>
+                <div>
+                    <h3>Your Personalized Career Path</h3>
+                    <p>Based on your interests & skills</p>
+                </div>
+            </div>
+            <div class="ai-recommendations">
+                <div class="ai-recommendation" onclick="openVideo('Software Developer Career Path', 'https://www.youtube.com/embed/nu_pCVPkz5M')">
+                    <h4><i class="fas fa-laptop-code"></i> Software Developer</h4>
+                    <p>Perfect for problem solvers! Average salary: ₹8-25 LPA</p>
+                    <span class="match-score">95% Match</span>
+                </div>
+                <div class="ai-recommendation" onclick="openVideo('Data Science Career Guide', 'https://www.youtube.com/embed/ua-CiDNNj30')">
+                    <h4><i class="fas fa-chart-bar"></i> Data Scientist</h4>
+                    <p>Ideal for analytics lovers! Average salary: ₹6-20 LPA</p>
+                    <span class="match-score">90% Match</span>
+                </div>
+                <div class="ai-recommendation" onclick="openVideo('AI Engineering Roadmap', 'https://www.youtube.com/embed/yXJHrN0fR2I')">
+                    <h4><i class="fas fa-brain"></i> AI Engineer</h4>
+                    <p>For tech enthusiasts! Average salary: ₹10-30 LPA</p>
+                    <span class="match-score">88% Match</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Courses & Videos -->
+        <div class="section-header">
+            <h2>Recommended Courses & Videos</h2>
+            <a href="/courses">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <!-- Interest/Skill Input for Videos -->
+        <div class="ai-panel" style="margin-bottom: 30px;">
+            <div class="ai-header">
+                <div class="ai-icon"><i class="fas fa-video"></i></div>
+                <div>
+                    <h3>Get Video Recommendations</h3>
+                    <p>Enter your interest or skill to get personalized video suggestions</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 15px; margin-top: 15px;">
+                <input type="text" id="videoInterest" placeholder="e.g., Data Science, Web Development, Design..." 
+                       style="flex:1; padding: 14px 18px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 14px;">
+                <button onclick="getVideoRecommendations()" style="padding: 14px 25px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; border-radius: 12px; color: white; font-weight: 600; cursor: pointer;">
+                    <i class="fas fa-search"></i> Get Videos
+                </button>
+            </div>
+            <div id="videoRecommendations" class="courses-grid" style="margin-top: 20px;"></div>
+        </div>
+
+        <div class="courses-grid" style="margin-bottom: 40px;">
+            <div class="course-card" onclick="openVideo('Complete Web Development', 'https://www.youtube.com/embed/nu_pCVPkz5M')">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400" alt="Web Development">
+                    <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                    <span class="course-badge hot">Course + Video</span>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Development</div>
+                    <h3 class="course-title">Complete Web Development Bootcamp</h3>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        <span>4.8</span>
+                    </div>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 42 hrs</span>
+                        <span><i class="fas fa-play-circle"></i> Video Included</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="openVideo('Data Science Python', 'https://www.youtube.com/embed/ua-CiDNNj30')">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400" alt="Data Science">
+                    <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                    <span class="course-badge new">Course + Video</span>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Data Science</div>
+                    <h3 class="course-title">Data Science & ML with Python</h3>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <span>4.9</span>
+                    </div>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 36 hrs</span>
+                        <span><i class="fas fa-play-circle"></i> Video Included</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="openVideo('AI Machine Learning', 'https://www.youtube.com/embed/yXJHrN0fR2I')">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400" alt="AI">
+                    <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                    <span class="course-badge">Course + Video</span>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">AI & ML</div>
+                    <h3 class="course-title">Artificial Intelligence A-Z</h3>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <span>4.9</span>
+                    </div>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 40 hrs</span>
+                        <span><i class="fas fa-play-circle"></i> Video Included</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Career Recommendations Section -->
+        <div class="section-header">
+            <h2>Explore Career Opportunities</h2>
+            <a href="/career-suggestions">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="courses-grid" style="margin-bottom: 40px;">
+            <div class="course-card">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400" alt="Software Developer">
+                    <span class="course-badge hot">Top Pick</span>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Technology</div>
+                    <h3 class="course-title">Software Developer</h3>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 8px;">High demand with average salary ₹8-25 LPA</p>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>95% Match</span>
+                    </div>
+                    <button class="btn" style="width: 100%; margin-top: 15px; padding: 12px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer;">Explore Career</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400" alt="Data Scientist">
+                    <span class="course-badge new">Trending</span>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Data Science</div>
+                    <h3 class="course-title">Data Scientist</h3>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 8px;">Fastest growing field, salary ₹6-20 LPA</p>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>90% Match</span>
+                    </div>
+                    <button class="btn" style="width: 100%; margin-top: 15px; padding: 12px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer;">Explore Career</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400" alt="Cybersecurity">
+                </div>
+                <div class="course-content">
+                    <div class="course-category">Security</div>
+                    <h3 class="course-title">Cybersecurity Expert</h3>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 8px;">Critical need, salary ₹5-18 LPA</p>
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>88% Match</span>
+                    </div>
+                    <button class="btn" style="width: 100%; margin-top: 15px; padding: 12px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer;">Explore Career</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Feedback Section -->
+        <div class="ai-panel">
+            <div class="ai-header">
+                <div class="ai-icon"><i class="fas fa-comments"></i></div>
+                <div>
+                    <h3>Student Feedback & Reviews</h3>
+                    <p>What our students say about their learning journey</p>
+                </div>
+            </div>
+            <div class="ai-recommendations">
+                <div class="ai-recommendation">
+                    <h4><i class="fas fa-quote-left"></i> Amazing Experience!</h4>
+                    <p>"The career guidance platform helped me discover my passion for data science. The courses are well-structured and the AI recommendations are spot on!"</p>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 12px;">
+                        <img src="https://ui-avatars.com/api/?name=Priya+Sharma&background=667eea&color=fff&size=32" style="width: 32px; height: 32px; border-radius: 50%;">
+                        <div>
+                            <span style="color: white; font-weight: 600; font-size: 13px;">Priya Sharma</span>
+                            <span style="display: block; color: rgba(255,255,255,0.5); font-size: 11px;">Data Science Student</span>
+                        </div>
+                        <div style="margin-left: auto; color: #ffd700;">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-recommendation">
+                    <h4><i class="fas fa-quote-left"></i> Career Changed!</h4>
+                    <p>"I switched from marketing to software development. The personality test and aptitude assessments were incredibly accurate about my strengths."</p>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 12px;">
+                        <img src="https://ui-avatars.com/api/?name=Rahul+Patel&background=43e97b&color=fff&size=32" style="width: 32px; height: 32px; border-radius: 50%;">
+                        <div>
+                            <span style="color: white; font-weight: 600; font-size: 13px;">Rahul Patel</span>
+                            <span style="display: block; color: rgba(255,255,255,0.5); font-size: 11px;">Software Developer</span>
+                        </div>
+                        <div style="margin-left: auto; color: #ffd700;">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-recommendation">
+                    <h4><i class="fas fa-quote-left"></i> Highly Recommended!</h4>
+                    <p>"The interview practice and resume builder are fantastic. I landed my dream job within 2 months of completing the program!"</p>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 12px;">
+                        <img src="https://ui-avatars.com/api/?name=Sneha+Joshi&background=f5576c&color=fff&size=32" style="width: 32px; height: 32px; border-radius: 50%;">
+                        <div>
+                            <span style="color: white; font-weight: 600; font-size: 13px;">Sneha Joshi</span>
+                            <span style="display: block; color: rgba(255,255,255,0.5); font-size: 11px;">UX Designer</span>
+                        </div>
+                        <div style="margin-left: auto; color: #ffd700;">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Video Popup -->
+    <div class="video-popup" id="videoPopup">
+        <div class="video-container">
+            <button class="video-close" onclick="closeVideo()">
+                <i class="fas fa-times"></i>
+            </button>
+            <iframe class="video-player" id="videoPlayer" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="video-info">
+                <h3 id="videoTitle">Course Title</h3>
+                <p>Continue learning this course to enhance your skills</p>
+            </div>
+            <div class="video-controls">
+                <button onclick="closeVideo()"><i class="fas fa-play"></i> Resume Course</button>
+                <button onclick="closeVideo()"><i class="fas fa-bookmark"></i> Save for Later</button>
+            </div>
+        </div>
     </div>
-    
-    <div class="container">
-        <div class="header">
-            <!-- Language Selector -->
-            <div class="lang-selector">
-                <select onchange="window.location.href=this.value">
-                    <option value="{{ url_for('set_language', lang='en') }}" {% if current_lang == 'en' %}selected{% endif %}>English</option>
-                    <option value="{{ url_for('set_language', lang='mr') }}" {% if current_lang == 'mr' %}selected{% endif %}>मराठी</option>
-                    <option value="{{ url_for('set_language', lang='hi') }}" {% if current_lang == 'hi' %}selected{% endif %}>हिंदी</option>
-                </select>
-            </div>
-            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=200&h=200&fit=crop" alt="Career Guidance">
-            <h1>{{ t['career_guidance'] }} AI 🤖</h1>
-            <p>{{ t['find_your_path'] }} 🚀</p>
-        </div>
 
-        <div class="welcome">
-            <h2>{{ t['welcome'] }}, {{name}}! 👋</h2>
-            <p>{{ t['welcome_message'] }}</p>
-            <div class="stats">
-                <div class="stat-box">
-                    <span>0</span>
-                    <small>{{ t['nav_courses'] }}</small>
-                </div>
-                <div class="stat-box">
-                    <span>0</span>
-                    <small>{{ t['nav_certificates'] }}</small>
-                </div>
-                <div class="stat-box">
-                    <span>0</span>
-                    <small>Badges</small>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-title">
-            <i class="fas fa-rocket"></i>
-            {{ t['features'] }}
-        </div>
-        <div class="menu">
-            <div class="menu-item new-feature">
-                <span class="icon">🎯</span>
-                <a href="/career-suggestions">{{ t['career_suggestions'] }}</a>
-            </div>
-
-            <div class="menu-item">
-                <span class="icon">📝</span>
-                <a href="/test">{{ t['take_test'] }}</a>
-            </div>
-
-            <div class="menu-item">
-                <span class="icon">🤖</span>
-                <a href="/chat">{{ t['nav_chatbot'] }}</a>
-            </div>
-
-            <div class="menu-item">
-                <span class="icon">🧠</span>
-                <a href="/personality-test">{{ t['personality_test'] }}</a>
-            </div>
-
-            <div class="menu-item">
-                <span class="icon">📊</span>
-                <a href="/aptitude-test">{{ t['aptitude_test'] }}</a>
-            </div>
-
-            <div class="menu-item">
-                <span class="icon">💰</span>
-                <a href="/salary-predict">{{ t['predict_salary'] }}</a>
-            </div>
-            
-            <div class="menu-item">
-                <span class="icon">🏫</span>
-                <a href="/colleges">{{ t['nav_colleges'] }}</a>
-            </div>
-            
-            <div class="menu-item">
-                <span class="icon">📚</span>
-                <a href="/browse-careers">{{ t['browse_careers'] }}</a>
-            </div>
-        </div>
-
-        <div class="section-title">
-            <i class="fas fa-graduation-cap"></i>
-            Learning & Progress
-        </div>
-        <div class="menu-row">
-            <div class="menu-item">
-                <span class="icon">🎓</span>
-                <a href="/courses">{{ t['nav_courses'] }}</a>
-            </div>
-
-            <div class="menu-item">
-                <span class="icon">📈</span>
-                <a href="/progress">{{ t['nav_progress'] }}</a>
-            </div>
-
-            <div class="menu-item">
-                <span class="icon">🏆</span>
-                <a href="/certificates">{{ t['nav_certificates'] }}</a>
-            </div>
-
-            <div class="menu-item">
-                <span class="icon">📄</span>
-                <a href="/resume-builder">{{ t['resume_builder'] }}</a>
-            </div>
-        </div>
-
-        <div class="section-title">
-            <i class="fas fa-users"></i>
-            Expert Help
-        </div>
-        <div class="menu-row">
-            <div class="menu-item">
-                <span class="icon">👨‍🏫</span>
-                <a href="/mentors">{{ t['nav_mentors'] }}</a>
-            </div>
-
-            <div class="menu-item">
-                <span class="icon">📋</span>
-                <a href="/result">My Results</a>
-            </div>
-        </div>
-
-        <div class="section-title">
-            <i class="fas fa-family"></i>
-            For Parents
-        </div>
-        <div class="menu-row">
-            <div class="menu-item new-feature">
-                <span class="icon">👨‍👩‍👧</span>
-                <a href="/parents-corner">{{ t['nav_parents'] }}</a>
-            </div>
-            
-            <div class="menu-item new-feature">
-                <span class="icon">⚖️</span>
-                <a href="/conflict-analyzer">Conflict Analyzer</a>
-            </div>
-        </div>
-
-        <div class="credits">
-            <h3>✨ Project Created By ✨</h3>
-            <p>💜 Sakhi Suresh Chavan</p>
-            <p>💙 Vaishnavi Shankar Sutar</p>
-            <p>💚 Tanuja Tatoba Patil</p>
-            <p>💛 Dnyaneshwari Pandharinath Sutar</p>
-        </div>
-
-        <div class="footer">
-            <a href="/logout">{{ t['logout'] }} 👋</a>
-        </div>
-        
-        <a href="/admin-login" class="admin-link">{{ t['admin_login'] }}</a>
-    </div>
-    
     <!-- Floating Chatbot Button -->
-    <a href="/chat" class="floating-chatbot" title="Chat with AI Assistant">
-        🤖
+    <a href="/chat" class="floating-chatbot">
+        <i class="fas fa-robot"></i>
     </a>
+
+    <script>
+        // Toggle Sidebar on Mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Open Video Popup
+        function openVideo(title, videoUrl) {
+            const popup = document.getElementById('videoPopup');
+            const player = document.getElementById('videoPlayer');
+            const titleEl = document.getElementById('videoTitle');
+            
+            player.src = videoUrl + '?autoplay=1';
+            titleEl.textContent = title;
+            popup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Video Popup
+        function closeVideo() {
+            const popup = document.getElementById('videoPopup');
+            const player = document.getElementById('videoPlayer');
+            
+            player.src = '';
+            popup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close popup on outside click
+        document.getElementById('videoPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideo();
+            }
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-toggle');
+            
+            if (window.innerWidth <= 992 && 
+                !sidebar.contains(e.target) && 
+                !toggle.contains(e.target) &&
+                sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Video Recommendations Function
+        function getVideoRecommendations() {
+            const interest = document.getElementById('videoInterest').value;
+            if (!interest.trim()) {
+                alert('Please enter your interest or skill!');
+                return;
+            }
+            
+            const container = document.getElementById('videoRecommendations');
+            container.innerHTML = '<p style="color: white;"><i class="fas fa-spinner fa-spin"></i> Loading videos...</p>';
+            
+            fetch('/api/recommend-videos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ interest: interest, skills: '' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                container.innerHTML = '';
+                
+                if (data.videos && data.videos.length > 0) {
+                    data.videos.forEach(video => {
+                        const card = document.createElement('div');
+                        card.className = 'course-card';
+                        card.onclick = () => openVideo(video.title, 'https://www.youtube.com/embed/' + video.video_id);
+                        card.innerHTML = `
+                            <div class="course-thumbnail">
+                                <img src="https://img.youtube.com/vi/${video.video_id}/mqdefault.jpg" alt="${video.title}">
+                                <button class="course-play-btn"><i class="fas fa-play"></i></button>
+                            </div>
+                            <div class="course-content">
+                                <div class="course-category">${data.category}</div>
+                                <h3 class="course-title">${video.title}</h3>
+                                <div class="course-meta">
+                                    <span><i class="fas fa-user"></i> ${video.channel}</span>
+                                    <span><i class="fas fa-clock"></i> ${video.duration}</span>
+                                </div>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                } else {
+                    container.innerHTML = '<p style="color: white;">No videos found. Try a different interest!</p>';
+                }
+            })
+            .catch(error => {
+                container.innerHTML = '<p style="color: white;">Error loading videos. Please try again!</p>';
+            });
+        }
+
+        // Allow Enter key to search
+        document.getElementById('videoInterest').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                getVideoRecommendations();
+            }
+        });
+        
+        // Header Search Function
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                const query = document.getElementById('headerSearch').value.trim();
+                if (query) {
+                    performSearch(query);
+                }
+            }
+        }
+        
+        function activateSearch() {
+            document.getElementById('headerSearch').focus();
+        }
+        
+        function performSearch(query) {
+            const q = query.toLowerCase();
+            
+            // Check if it's a video/course related search
+            if (q.includes('course') || q.includes('video') || q.includes('learn') || 
+                q.includes('python') || q.includes('java') || q.includes('web') || 
+                q.includes('data') || q.includes('machine') || q.includes('ai') ||
+                q.includes('design') || q.includes('marketing') || q.includes('business')) {
+                // Navigate to videos page
+                window.location.href = '/videos?search=' + encodeURIComponent(query);
+            }
+            // Check if it's career related
+            else if (q.includes('career') || q.includes('job') || q.includes('job') || 
+                     q.includes('salary') || q.includes('future') || q.includes('profession')) {
+                window.location.href = '/browse-careers?search=' + encodeURIComponent(query);
+            }
+            // Check if it's college related
+            else if (q.includes('college') || q.includes('university') || q.includes('admission')) {
+                window.location.href = '/colleges?search=' + encodeURIComponent(query);
+            }
+            // Default to courses page
+            else {
+                window.location.href = '/courses?search=' + encodeURIComponent(query);
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Feedback - Career Guidance AI</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --success: #43e97b;
+            --warning: #fa709a;
+            --danger: #ff6b6b;
+            --dark: #1a1a2e;
+            --darker: #0f0f1a;
+            --light: #e8e8e8;
+            --card-bg: #16213e;
+            --card-hover: #1f3460;
+            --sidebar-width: 260px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: var(--light);
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+
+        .feedback-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .rating-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .rating-option {
+            flex: 1;
+            text-align: center;
+        }
+
+        .rating-option input {
+            display: none;
+        }
+
+        .rating-option label {
+            display: block;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-option input:checked + label {
+            border-color: var(--primary);
+            background: rgba(102,126,234,0.2);
+        }
+
+        .rating-option label:hover {
+            border-color: var(--primary);
+        }
+
+        .rating-option .stars {
+            font-size: 24px;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+
+        .rating-option .rating-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+        }
+
+        .success-message {
+            background: rgba(67, 233, 123, 0.2);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            color: var(--success);
+            margin-bottom: 25px;
+        }
+
+        .success-message i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/dashboard" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <div class="header">
+            <h1>💬 Student Feedback</h1>
+            <p>Help us improve! Share your experience with Career Guidance AI</p>
+        </div>
+
+        <div class="feedback-card">
+            {% if message %}
+            <div class="success-message">
+                <i class="fas fa-check-circle"></i>
+                {{ message }}
+            </div>
+            {% endif %}
+
+            <form method="POST" action="/feedback">
+                <div class="form-group">
+                    <label>How would you rate your experience?</label>
+                    <div class="rating-group">
+                        <div class="rating-option">
+                            <input type="radio" name="rating" value="1" id="rate1">
+                            <label for="rate1">
+                                <div class="stars">⭐</div>
+                                <div class="rating-text">Poor</div>
+                            </label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="rating" value="2" id="rate2">
+                            <label for="rate2">
+                                <div class="stars">⭐⭐</div>
+                                <div class="rating-text">Fair</div>
+                            </label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="rating" value="3" id="rate3">
+                            <label for="rate3">
+                                <div class="stars">⭐⭐⭐</div>
+                                <div class="rating-text">Good</div>
+                            </label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="rating" value="4" id="rate4">
+                            <label for="rate4">
+                                <div class="stars">⭐⭐⭐⭐</div>
+                                <div class="rating-text">Very Good</div>
+                            </label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="rating" value="5" id="rate5" checked>
+                            <label for="rate5">
+                                <div class="stars">⭐⭐⭐⭐⭐</div>
+                                <div class="rating-text">Excellent</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Feedback / Suggestions</label>
+                    <textarea name="feedback" placeholder="Tell us what you liked, what could be improved, or any suggestions..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Submit Feedback
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Guidance After 12th - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 { font-size: 36px; margin-bottom: 10px; }
+        .header p { font-size: 18px; opacity: 0.9; }
+        .header .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .nav-buttons {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .nav-btn {
+            padding: 12px 25px;
+            background: white;
+            color: #333;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+        
+        .content { padding: 40px; }
+        
+        .intro-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .intro-section h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .intro-section p {
+            color: #666;
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .stream-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+            transition: all 0.3s;
+        }
+        .stream-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .stream-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .stream-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        .stream-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+        .stream-title span {
+            font-size: 16px;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        .stream-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        
+        .courses-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .courses-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #f5576c;
+        }
+        .courses-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+        .courses-table tr:hover td {
+            background: #fff5f7;
+        }
+        .course-name {
+            font-weight: 600;
+            color: #333;
+        }
+        .salary-tag {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .jobs-tag {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .tips-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        .tips-section h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+        }
+        .tip-icon {
+            width: 40px;
+            height: 40px;
+            background: #f5576c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+        .tip-text {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 28px; }
+            .content { padding: 20px; }
+            .stream-card { padding: 20px; }
+            .courses-table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> Career Guidance After 12th</h1>
+            <p>Explore endless career opportunities after completing your 12th standard</p>
+            <span class="badge">🎓 For Students who completed 12th Standard</span>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="/dashboard" class="nav-btn"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="/after-10th" class="nav-btn"><i class="fas fa-school"></i> After 10th</a>
+            <a href="/browse-careers" class="nav-btn"><i class="fas fa-briefcase"></i> Browse Careers</a>
+            <a href="/career-suggestions" class="nav-btn"><i class="fas fa-compass"></i> Get Suggestions</a>
+            <a href="/chat" class="nav-btn"><i class="fas fa-robot"></i> AI Assistant</a>
+        </div>
+        
+        <div class="content">
+            <div class="intro-section">
+                <h2>🚀 Your Future Starts Here</h2>
+                <p>After 12th, you have countless career options. Whether you want to pursue engineering, medical, commerce, arts, or government jobs - we've got you covered with detailed information about each path.</p>
+            </div>
+            
+            {% for option in options %}
+            <div class="stream-card">
+                <div class="stream-header">
+                    <div class="stream-icon">
+                        <i class="fas fa-{{ option.icon }}"></i>
+                    </div>
+                    <h3 class="stream-title">{{ option.stream }}</h3>
+                </div>
+                <p class="stream-description">{{ option.description }}</p>
+                
+                <table class="courses-table">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Duration</th>
+                            <th>Expected Salary</th>
+                            <th>Job Roles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in option.courses %}
+                        <tr>
+                            <td class="course-name">{{ course.name }}</td>
+                            <td>{{ course.duration }}</td>
+                            <td><span class="salary-tag">{{ course.salary }}</span></td>
+                            <td class="jobs-tag">{{ course.jobs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+            
+            <div class="tips-section">
+                <h3><i class="fas fa-star"></i> Important Tips for 12th Pass Students</h3>
+                <div class="tip-item">
+                    <div class="tip-icon"><i class="fas fa-clock"></i></div>
+                    <div class="tip-text"><strong>Start Early:</strong> Begin researching careers and colleges as soon as possible. Entrance exams require months of preparation.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <div class="tip-text"><strong>Entrance Exams:</strong> Most professional courses require entrance exams. Prepare systematically - JEE, NEET, CAT, CLAT, etc.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon"><i class="fas fa-university"></i></div>
+                    <div class="tip-text"><strong>College Research:</strong> Don't just choose a course - research colleges too. Placement records, faculty, and infrastructure matter.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="tip-text"><strong>Internships:</strong> Start gaining experience through internships during your studies. It helps in final placements.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon"><i class="fas fa-balance-scale"></i></div>
+                    <div class="tip-text"><strong>Government vs Private:</strong> Consider both government and private sector jobs. Government jobs offer stability, private offers growth.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon"><i class="fas fa-laptop"></i></div>
+                    <div class="tip-text"><strong>Online Courses:</strong> Supplement your degree with online certifications from Coursera, Udemy, NPTEL, etc.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><i class="fas fa-info-circle"></i> For personalized career guidance, take our career test or chat with AI Assistant</p>
+        </div>
+    </div>
+</body>
+</html>

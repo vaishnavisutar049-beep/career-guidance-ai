@@ -44,6 +44,11 @@
             color: white;
         }
         
+        .btn-download {
+            background: #2196f3;
+            color: white;
+        }
+        
         .certificate {
             max-width: 800px;
             margin: 0 auto;
@@ -195,6 +200,7 @@
 </head>
 <body>
     <div class="actions">
+        <a href="/certificate/download/{{ certificate[0] }}" class="btn btn-download">📥 Download PDF</a>
         <button class="btn btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
         <a href="/certificates" class="btn">← Back to Certificates</a>
     </div>

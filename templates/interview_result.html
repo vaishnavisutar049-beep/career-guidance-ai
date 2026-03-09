@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Practice Results - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { font-size: 16px; opacity: 0.9; }
+        
+        .content { padding: 30px; }
+        
+        .score-card {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .score-label {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .score-value {
+            font-size: 64px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .score-message {
+            font-size: 20px;
+            color: #333;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i { color: #11998e; }
+        
+        .question-review {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #11998e;
+        }
+        
+        .question-review .question {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .question-review .answer {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .question-review .answer-label {
+            font-size: 12px;
+            color: #11998e;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .tips-section {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .tips-section h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .tips-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .tips-section li {
+            padding: 8px 0;
+            color: #856404;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .tips-section li i {
+            color: #ffc107;
+            margin-top: 3px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(56, 239, 125, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #11998e;
+        }
+        
+        .stat-card .label {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-trophy"></i> Interview Practice Complete!</h1>
+            <p>Great job practicing with {{ company }} questions</p>
+        </div>
+        
+        <div class="content">
+            <div class="score-card">
+                <div class="score-label">Your Practice Score</div>
+                <div class="score-value">{{ score }}%</div>
+                <div class="score-message">{{ message }}</div>
+            </div>
+            
+            <div class="stat-cards">
+                <div class="stat-card">
+                    <div class="value">{{ total_questions }}</div>
+                    <div class="label">Questions Answered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">{{ answered }}</div>
+                    <div class="label">Answers Written</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">{{ company }}</div>
+                    <div class="label">Company Practiced</div>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                <i class="fas fa-clipboard-list"></i> Review Your Answers
+            </div>
+            
+            {% for q in questions %}
+            <div class="question-review">
+                <div class="question">{{ loop.index }}. {{ q.text }}</div>
+                {% if answers['answer_' + loop.index|string] %}
+                <div class="answer-label">Your Answer:</div>
+                <div class="answer">{{ answers['answer_' + loop.index|string] }}</div>
+                {% else %}
+                <div class="answer" style="color: #999; font-style: italic;">No answer provided</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+            <div class="tips-section">
+                <h3><i class="fas fa-lightbulb"></i> Tips for Your Next Interview</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Practice the STAR method for behavioral questions (Situation, Task, Action, Result)</li>
+                    <li><i class="fas fa-check"></i> Research the company thoroughly before your interview</li>
+                    <li><i class="fas fa-check"></i> Prepare concrete examples from your past experiences</li>
+                    <li><i class="fas fa-check"></i> Practice speaking aloud to build confidence</li>
+                    <li><i class="fas fa-check"></i> Prepare thoughtful questions to ask the interviewer</li>
+                    <li><i class="fas fa-check"></i> Get enough sleep before the interview day</li>
+                </ul>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="/interview" class="btn btn-primary">
+                    <i class="fas fa-redo"></i> Practice Again
+                </a>
+                <a href="/courses" class="btn btn-secondary">
+                    <i class="fas fa-book"></i> Browse Courses
+                </a>
+            </div>
+            
+            <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        </div>
+    </div>
+    
+    <div style="text-align: center; padding: 20px; color: #666; font-size: 13px;">
+        <p>&copy; 2026 Career Guidance AI. All rights reserved.</p>
+    </div>
+</body>
+</html>

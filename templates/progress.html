@@ -3,60 +3,395 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progress - Career Guidance AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#1a1a2e">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>My Results - Career Guidance AI</title>
     <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --success: #43e97b;
+            --warning: #fa709a;
+            --danger: #ff6b6b;
+            --dark: #1a1a2e;
+            --darker: #0f0f1a;
+            --light: #e8e8e8;
+            --card-bg: #16213e;
+            --sidebar-width: 260px;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
+            color: var(--light);
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+            border-right: 1px solid rgba(255,255,255,0.05);
             padding: 20px;
+            z-index: 1000;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 10px;
+            margin-bottom: 30px;
         }
-        .header {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+
+        .sidebar-logo h2 {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav li { margin-bottom: 8px; }
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
+            color: white;
+            border-left: 3px solid var(--primary);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
             padding: 30px;
-            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Results Grid */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .result-card h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-card h3 i {
+            color: var(--primary);
+        }
+
+        .result-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+
+        .result-item h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .result-item p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
+        }
+
+        /* College Cards */
+        .college-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .college-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .college-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .college-card h4 {
+            font-size: 15px;
+            margin-bottom: 8px;
             color: white;
         }
-        .content { padding: 30px; }
+
+        .college-card p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 8px;
+        }
+
+        .college-tag {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Suggestion Box */
+        .suggestion-box {
+            background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
+            border: 1px solid var(--primary);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .suggestion-box h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .suggestion-box h3 i {
+            color: var(--success);
+        }
+
+        .suggestion-list {
+            list-style: none;
+        }
+
+        .suggestion-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .suggestion-list li:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-list li i {
+            color: var(--success);
+        }
+
         .empty-state {
             text-align: center;
-            padding: 40px;
-            color: #666;
+            padding: 60px 20px;
+            background: var(--card-bg);
+            border-radius: 20px;
         }
-        .back-link { display: block; text-align: center; margin-top: 20px; color: #667eea; text-decoration: none; }
+
+        .empty-state i {
+            font-size: 60px;
+            color: rgba(255,255,255,0.2);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📈 Your Progress</h1>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h2>📊 My Results</h2>
         </div>
-        <div class="content">
-            {% if progress %}
-                {% for p in progress %}
-                <div style="background:#f8f9fa;padding:20px;border-radius:15px;margin-bottom:15px;">
-                    <h3>{{ p[2] }}</h3>
-                    <p style="color:#667eea;font-size:20px;font-weight:700;">{{ p[3] }}%</p>
+        <ul class="sidebar-nav">
+            <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="/personality-test"><i class="fas fa-brain"></i> Personality Test</a></li>
+            <li><a href="/aptitude-test"><i class="fas fa-chart-line"></i> Aptitude Test</a></li>
+            <li><a href="/career-suggestions"><i class="fas fa-compass"></i> Career Suggestions</a></li>
+            <li><a href="/colleges"><i class="fas fa-graduation-cap"></i> Colleges</a></li>
+            <li><a href="/progress" class="active"><i class="fas fa-trophy"></i> My Progress</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>📊 My Results & Progress</h1>
+            <p>Based on your interests and skills</p>
+        </header>
+
+        {% if personality_result or aptitude_result or career_result %}
+        <div class="results-grid">
+            <!-- Personality Result -->
+            {% if personality_result %}
+            <div class="result-card">
+                <h3><i class="fas fa-brain"></i> Personality Analysis</h3>
+                <div class="result-item">
+                    <h4>{{ personality_result[0] }}</h4>
+                    <p><strong>Strengths:</strong> {{ personality_result[1] }}</p>
+                    <p><strong>Weaknesses:</strong> {{ personality_result[2] }}</p>
+                    <p><strong>Best Careers:</strong> {{ personality_result[3] }}</p>
                 </div>
-                {% endfor %}
-            {% else %}
-            <div class="empty-state">
-                <h3>📊 No Progress Yet</h3>
-                <p>Start learning to track your progress!</p>
             </div>
             {% endif %}
-            <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+
+            <!-- Aptitude Result -->
+            {% if aptitude_result %}
+            <div class="result-card">
+                <h3><i class="fas fa-chart-line"></i> Aptitude Score</h3>
+                <div class="result-item">
+                    <h4>Score: {{ aptitude_result[0] }}%</h4>
+                    <p><strong>Recommendation:</strong> {{ aptitude_result[1] }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Career Result -->
+            {% if career_result %}
+            <div class="result-card">
+                <h3><i class="fas fa-briefcase"></i> Career Match</h3>
+                <div class="result-item">
+                    <h4>{{ career_result[0] }}</h4>
+                    <p><strong>Skills:</strong> {{ career_result[1] }}</p>
+                    <p><strong>Salary Range:</strong> {{ career_result[2] }}</p>
+                </div>
+            </div>
+            {% endif %}
         </div>
-    </div>
+
+        <!-- College Recommendations -->
+        <div class="result-card" style="margin-bottom: 30px;">
+            <h3><i class="fas fa-graduation-cap"></i> Recommended Colleges</h3>
+            <p style="color: rgba(255,255,255,0.6); margin-bottom: 15px;">Based on your interests and skills</p>
+            
+            <div class="college-grid">
+                <div class="college-card">
+                    <h4>🏛️ IIT Bombay</h4>
+                    <p>Top Engineering College</p>
+                    <span class="college-tag">Rank #1</span>
+                </div>
+                <div class="college-card">
+                    <h4>🎓 MIT Pune</h4>
+                    <p>Best for Computer Science</p>
+                    <span class="college-tag">Top 10</span>
+                </div>
+                <div class="college-card">
+                    <h4>📚 NIT Trichy</h4>
+                    <p>Excellent Placements</p>
+                    <span class="college-tag">Top 20</span>
+                </div>
+                <div class="college-card">
+                    <h4>💡 BITS Pilani</h4>
+                    <p>Industry Recognized</p>
+                    <span class="college-tag">Premier</span>
+                </div>
+                <div class="college-card">
+                    <h4>🔬 IISc Bangalore</h4>
+                    <p>Best for Research</p>
+                    <span class="college-tag">Rank #1</span>
+                </div>
+                <div class="college-card">
+                    <h4>📖 VIT Vellore</h4>
+                    <p>Great Infrastructure</p>
+                    <span class="college-tag">Top 15</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- High Suggestions -->
+        <div class="suggestion-box">
+            <h3><i class="fas fa-lightbulb"></i> Personalized Suggestions</h3>
+            <ul class="suggestion-list">
+                <li><i class="fas fa-check-circle"></i> Take online courses in Python and Data Science to enhance your skills</li>
+                <li><i class="fas fa-check-circle"></i> Apply for internships at top tech companies</li>
+                <li><i class="fas fa-check-circle"></i> Prepare for coding interviews using our Interview Practice tool</li>
+                <li><i class="fas fa-check-circle"></i> Build projects to showcase your skills to employers</li>
+                <li><i class="fas fa-check-circle"></i> Network with professionals in your chosen field</li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-clipboard-list"></i>
+            <h3>No Results Yet</h3>
+            <p>Take tests to see your personalized results and recommendations</p>
+            <a href="/personality-test" class="btn">Take Personality Test</a>
+        </div>
+        {% endif %}
+    </main>
 </body>
 </html>

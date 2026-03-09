@@ -172,6 +172,16 @@
         <a href="/dashboard" class="back-link">← Back to Dashboard</a>
         <a href="/career-suggestions" class="back-link">Get Suggestions →</a>
         
+        <div style="padding: 20px 30px; background: #f8f9fa;">
+            <div style="max-width: 500px; margin: 0 auto; position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #666;"></i>
+                <input type="text" id="careerSearch" placeholder="Search careers..." 
+                       style="width: 100%; padding: 15px 15px 15px 50px; border: 2px solid #ddd; border-radius: 30px; font-size: 16px; outline: none;"
+                       onkeyup="filterCareers()">
+            </div>
+            <p id="searchResultText" style="text-align: center; margin-top: 15px; color: #666;"></p>
+        </div>
+        
         <div class="content">
             {% for category, career_keys in categories.items() %}
             <div class="category-section">
@@ -205,5 +215,57 @@
     <a href="/chat" class="floating-chatbot" title="Chat with AI Assistant">
         🤖
     </a>
+    <script>
+        // Get search parameter from URL on page load
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search');
+            if (searchQuery) {
+                document.getElementById('careerSearch').value = searchQuery;
+                filterCareers();
+            }
+        };
+        
+        function filterCareers() {
+            const searchInput = document.getElementById('careerSearch').value.toLowerCase();
+            const careerCards = document.querySelectorAll('.career-card');
+            let visibleCount = 0;
+            
+            careerCards.forEach(card => {
+                const title = card.querySelector('h3') ? card.querySelector('h3').textContent.toLowerCase() : '';
+                const text = card.textContent.toLowerCase();
+                
+                if (title.includes(searchInput) || text.includes(searchInput)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Also filter category sections
+            const categorySections = document.querySelectorAll('.category-section');
+            categorySections.forEach(section => {
+                const visibleCards = section.querySelectorAll('.career-card[style="display: block;"], .career-card:not([style])');
+                const cards = section.querySelectorAll('.career-card');
+                let hasVisible = false;
+                cards.forEach(card => {
+                    if (card.style.display !== 'none') {
+                        hasVisible = true;
+                    }
+                });
+                section.style.display = hasVisible ? 'block' : 'none';
+            });
+            
+            const resultText = document.getElementById('searchResultText');
+            if (searchInput && visibleCount === 0) {
+                resultText.textContent = 'No careers found for "' + searchInput + '". Try different keywords!';
+            } else if (searchInput) {
+                resultText.textContent = 'Showing ' + visibleCount + ' career(s) for "' + searchInput + '"';
+            } else {
+                resultText.textContent = '';
+            }
+        }
+    </script>
 </body>
 </html>

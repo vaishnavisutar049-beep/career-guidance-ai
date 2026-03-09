@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Practice - Career Guidance AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { font-size: 16px; opacity: 0.9; }
+        
+        .content { padding: 30px; }
+        
+        .company-section {
+            margin-bottom: 30px;
+        }
+        
+        .company-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .company-title i { color: #f5576c; }
+        
+        .company-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .company-btn {
+            padding: 12px 20px;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .company-btn:hover, .company-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+        
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 15px;
+            border-left: 4px solid #f5576c;
+        }
+        
+        .question-number {
+            font-size: 12px;
+            color: #f5576c;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .answer-area {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        .answer-area:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+        
+        .answer-area::placeholder {
+            color: #999;
+        }
+        
+        .answer-tips {
+            background: #fff3cd;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #856404;
+        }
+        
+        .answer-tips strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .timer-section {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .timer {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1976d2;
+        }
+        
+        .timer.warning {
+            color: #ff9800;
+        }
+        
+        .timer.danger {
+            color: #f44336;
+        }
+        
+        .progress-info {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .feedback-section {
+            display: none;
+            background: #d4edda;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 2px solid #28a745;
+        }
+        
+        .feedback-section.show {
+            display: block;
+        }
+        
+        .feedback-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+        
+        .score-display {
+            font-size: 36px;
+            font-weight: 700;
+            color: #28a745;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #f5576c;
+            background: white;
+            color: #f5576c;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .intro-text {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+        
+        @media (max-width: 600px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-user-tie"></i> Interview Practice</h1>
+            <p>Practice with real-time interview questions from top companies</p>
+        </div>
+        
+        <div class="content">
+            {% if not selected_company %}
+            <!-- Company Selection -->
+            <p class="intro-text">Select a company to practice interview questions based on their commonly asked topics:</p>
+            
+            <div class="category-filters">
+                <button class="filter-btn active" onclick="filterCompanies('all')">All Companies</button>
+                <button class="filter-btn" onclick="filterCompanies('tech')">Tech Giants</button>
+                <button class="filter-btn" onclick="filterCompanies('finance')">Finance</button>
+                <button class="filter-btn" onclick="filterCompanies('consulting')">Consulting</button>
+                <button class="filter-btn" onclick="filterCompanies('product')">Product</button>
+            </div>
+            
+            <div class="company-section">
+                <div class="company-title">
+                    <i class="fas fa-building"></i> Select Your Target Company
+                </div>
+                
+                <div class="company-logos" id="companyList">
+                    <button class="company-btn" onclick="selectCompany('Google')">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Microsoft')">
+                        <i class="fab fa-microsoft"></i> Microsoft
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Amazon')">
+                        <i class="fab fa-amazon"></i> Amazon
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Meta')">
+                        <i class="fab fa-meta"></i> Meta
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Apple')">
+                        <i class="fab fa-apple"></i> Apple
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Netflix')">
+                        <i class="fas fa-play"></i> Netflix
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('TCS')">
+                        <i class="fas fa-laptop-code"></i> TCS
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Infosys')">
+                        <i class="fas fa-code"></i> Infosys
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Wipro')">
+                        <i class="fas fa-server"></i> Wipro
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Accenture')">
+                        <i class="fas fa-briefcase"></i> Accenture
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Deloitte')">
+                        <i class="fas fa-chart-line"></i> Deloitte
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Goldman Sachs')">
+                        <i class="fas fa-university"></i> Goldman Sachs
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Flipkart')">
+                        <i class="fas fa-shopping-cart"></i> Flipkart
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Swiggy')">
+                        <i class="fas fa-motorcycle"></i> Swiggy
+                    </button>
+                    <button class="company-btn" onclick="selectCompany('Byju\'s')">
+                        <i class="fas fa-graduation-cap"></i> Byju's
+                    </button>
+                </div>
+            </div>
+            
+            {% else %}
+            <!-- Interview Questions -->
+            <div class="company-section">
+                <div class="company-title">
+                    <i class="fas fa-building"></i> {{ selected_company }} Interview Questions
+                </div>
+            </div>
+            
+            <div class="timer-section">
+                <div>
+                    <strong>Practice Mode:</strong> Take your time to answer each question
+                </div>
+                <div class="progress-info">
+                    Question <span id="currentQ">1</span> of <span id="totalQ">{{ questions|length }}</span>
+                </div>
+            </div>
+            
+            <form id="interviewForm" method="POST" action="/interview/submit">
+                <input type="hidden" name="company" value="{{ selected_company }}">
+                
+                {% for question in questions %}
+                <div class="question-card" id="question{{ loop.index }}">
+                    <div class="question-number">Question {{ loop.index }} of {{ questions|length }}</div>
+                    <div class="question-text">{{ question.text }}</div>
+                    <textarea class="answer-area" 
+                              name="answer_{{ loop.index }}" 
+                              placeholder="Write your answer here... (Tip: Be specific, use STAR method for behavioral questions)"
+                              rows="4"></textarea>
+                    <div class="answer-tips">
+                        <strong><i class="fas fa-lightbulb"></i> Tips:</strong>
+                        {{ question.tips }}
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check-circle"></i> Submit Answers
+                    </button>
+                    <a href="/interview" class="btn btn-secondary">
+                        <i class="fas fa-redo"></i> Change Company
+                    </a>
+                </div>
+            </form>
+            {% endif %}
+            
+            <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        </div>
+    </div>
+    
+    <div style="text-align: center; padding: 20px; color: #666; font-size: 13px;">
+        <p>&copy; 2026 Career Guidance AI. All rights reserved.</p>
+    </div>
+    
+    <script>
+        function selectCompany(company) {
+            window.location.href = '/interview?company=' + encodeURIComponent(company);
+        }
+        
+        function filterCompanies(category) {
+            const buttons = document.querySelectorAll('.company-btn');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const categories = {
+                'tech': ['Google', 'Microsoft', 'Amazon', 'Meta', 'Apple', 'Netflix'],
+                'finance': ['Goldman Sachs', 'Deloitte'],
+                'consulting': ['Deloitte', 'Accenture'],
+                'product': ['Flipkart', 'Swiggy', 'Byju\'s'],
+                'all': []
+            };
+            
+            const allowed = categories[category];
+            
+            buttons.forEach(btn => {
+                const company = btn.textContent.trim();
+                if (allowed.length === 0 || allowed.includes(company)) {
+                    btn.style.display = 'flex';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
