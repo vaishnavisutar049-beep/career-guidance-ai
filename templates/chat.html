@@ -414,10 +414,84 @@
 
         /* Mobile */
         @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .main-chat { margin-left: 0; }
-            .suggestions { grid-template-columns: 1fr; }
-            .message-content { max-width: 85%; }
+            .sidebar { 
+                transform: translateX(-100%);
+                width: 80%;
+                max-width: 300px;
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-chat { 
+                margin-left: 0;
+                padding: 60px 10px 70px;
+            }
+            .chat-header {
+                padding: 12px 15px;
+            }
+            .chat-header h1 {
+                font-size: 16px;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .suggestions {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 10px;
+            }
+            .suggestion-card {
+                padding: 12px;
+            }
+            .suggestion-card h3 {
+                font-size: 13px;
+            }
+            .suggestion-card p {
+                font-size: 12px;
+            }
+            .message-content { 
+                max-width: 85%;
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            .message.bot .message-content {
+                border-radius: 15px 15px 15px 0;
+            }
+            .message.user .message-content {
+                border-radius: 15px 15px 0 15px;
+            }
+            .input-area {
+                padding: 10px;
+                gap: 8px;
+            }
+            .input-area input {
+                padding: 12px;
+                font-size: 14px;
+            }
+            .input-area button {
+                padding: 12px 15px;
+            }
+            .quick-actions {
+                gap: 8px;
+            }
+            .quick-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .chat-header h1 {
+                font-size: 14px;
+            }
+            .message-content {
+                max-width: 90%;
+                font-size: 13px;
+            }
+            .input-area input {
+                padding: 10px;
+                font-size: 13px;
+            }
         }
     </style>
 </head>

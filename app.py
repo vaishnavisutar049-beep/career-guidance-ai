@@ -1623,6 +1623,30 @@ def admin_youtube_api():
     
     return render_template('admin_youtube_api.html', api_key_status=api_key_status)
 
+@app.route('/admin-feedback')
+def admin_feedback():
+    """View all student feedback - Admin only"""
+    # Check if admin is logged in
+    if 'admin_id' not in session:
+        return redirect(url_for('admin_login'))
+    
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    
+    # Get all feedback with user names
+    try:
+        c.execute('''SELECT f.id, f.feedback_text, f.rating, f.created_at, u.name, u.email 
+                     FROM feedback f 
+                     JOIN users u ON f.user_id = u.id 
+                     ORDER BY f.created_at DESC''')
+        feedback_list = c.fetchall()
+    except:
+        feedback_list = []
+    
+    conn.close()
+    
+    return render_template('admin_feedback.html', feedback_list=feedback_list)
+
 # Load YouTube API key from config file on startup
 def load_youtube_api_key():
     global YOUTUBE_API_KEY
