@@ -1,4 +1,6 @@
 flask==3.0.0
 werkzeug==3.0.1
+scikit-learn
 reportlab==4.0.7
 requests==2.31.0
+
